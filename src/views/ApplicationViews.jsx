@@ -14,7 +14,7 @@ useEffect(() => {
   setCurrentUser(shepherdsUserObject);
 }, [])
 
-  return currentUser.admin ? (
+  return currentUser.isAdmin ? (
   <AdminViews currentUser={currentUser} /> 
   ) : (
   <EmployeeViews currentUser={currentUser}/>

@@ -1,3 +1,18 @@
+import { Outlet } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
+import { AdminNav } from "../Components/NavBar/AdminNav.jsx"
+
 export const AdminViews = ({currentUser}) => {
-    return <>Admin</>
+    return (
+        <Routes> 
+        <Route path="/" element={
+            <>
+            <AdminNav />
+            <Outlet />
+            </>
+        }>
+
+        </Route>
+        </Routes>
+    )
 }
