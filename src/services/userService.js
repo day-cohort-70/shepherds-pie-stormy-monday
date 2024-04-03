@@ -1,4 +1,4 @@
-export const getEmployeeByEmail = (email) => {
+export const getEmployeeByEmail = async (email) => {
     const sampleEmployee = {
         id: 1,
         address: "Pizza town",
@@ -9,6 +9,7 @@ export const getEmployeeByEmail = (email) => {
     }
     return sampleEmployee;
     
+    // TODO: remove ASYNC
     // fetch(`http://localhost:8088/employees?email=${email}`).then((res) =>
     //   res.json()
     // )
