@@ -32,8 +32,8 @@ export const Login = () => {
     <main className="container-login">
       <section>
         <form className="form-login" onSubmit={handleLogin}>
-          <h1>Shepherd's Pie</h1>
-          <h2>Please sign in</h2>
+          <h1>Welcome to Shepherd's Pies!</h1>
+          <h2>Please login with your email</h2>
           <fieldset>
             <div className="form-group">
               <input
