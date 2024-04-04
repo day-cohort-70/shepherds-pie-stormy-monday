@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom"
 import { Route, Routes } from "react-router-dom"
-import { EmployeeNav } from "../Components/NavBar/EmployeeNav.jsx"
+import { EmployeeNav } from "../components/nav/EmployeeNav.jsx"
 
 export const EmployeeViews = ({currentUser}) => {
     return (
