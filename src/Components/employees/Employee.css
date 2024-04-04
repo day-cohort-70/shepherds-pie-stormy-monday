@@ -1,0 +1,28 @@
+.employee {
+    background-color: var(--white);
+    border: 1px solid green;
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+
+  .employee-info {
+    color: var(--info);
+    font-family: "Roboto", sans-serif;
+  }
+
+  .employee:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  .employee > div {
+    text-decoration: none;
+  }
+
+  .employee-edit {
+    background-color: var(--white);
+    border: 1px solid green;
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
