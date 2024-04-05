@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./Login.css"
-import { getEmployeeByEmail } from "../../services/userService"
+import { getEmployeeByEmail } from "../../services/UserService"
 
 export const Login = () => {
   const [email, set] = useState("JoePie@shepherd.com")
