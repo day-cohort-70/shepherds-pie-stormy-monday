@@ -8,7 +8,7 @@ export const AdminNav = () =>{
     return(
         <ul className="navbar">
         <li className="navbar-item">
-            <Link to='/orders'>Orders</Link>
+            <Link to='/'>Orders</Link>
         </li>
         <li className="navbar-item">
             <Link to='/employees'>Employees</Link>
