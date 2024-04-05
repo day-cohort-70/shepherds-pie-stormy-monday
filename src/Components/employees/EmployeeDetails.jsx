@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom"
-import { addEmployee, updateEmployee } from "../../services/employeeService.js";
+import { addEmployee, updateEmployee, deleteEmployee } from "../../services/employeeService.js";
 import "./Employee.css"
 
 export const EmployeeDetails = () => {
@@ -10,7 +10,7 @@ export const EmployeeDetails = () => {
     const [editedEmployee, setEditedEmployee] = useState();
     //use employee object passed from EmployeesList as location state
     const location = useLocation();
-    const employeeObj = location.state?.employee;
+    var employeeObj = location.state?.employee;
   
     useEffect(() => {
         //set both in state
@@ -35,12 +35,36 @@ export const EmployeeDetails = () => {
     
         if (editedEmployee.id === null) {
           await addEmployee(editedEmployee);
+          window.alert(`Employee ${editedEmployee.name} added.`)
         } else {
           await updateEmployee(editedEmployee.id, editedEmployee);
+          window.alert(`Employee ${editedEmployee.name} updated.`)
         }
     
         setEmployee(editedEmployee);
         console.log(editedEmployee);
+      };
+
+      const handleDelete = async (event) => {
+        event.preventDefault();
+        console.log("Deleting...");
+    
+        if (editedEmployee.id !== null) {
+          await deleteEmployee(editedEmployee.id);
+          window.alert(`Employee ${editedEmployee.name} deleted.`)
+        //   location.state.employee = {}
+        //    employeeObj = {
+        //     id: null, 
+        //     name: "",
+        //     address: "",
+        //     phone: "",
+        //     email: "",
+        //     admin: false
+        // };
+        //     setEditedEmployee(employeeObj);
+        
+          
+        }
       };
    
     return <>
@@ -131,6 +155,11 @@ export const EmployeeDetails = () => {
             <fieldset>
             <div className="form-group">
                     <button className="form-btn btn-primary" onClick={handleSave}>Save Employee</button>
+                    {editedEmployee?.id !== null && (
+              <button className="form-btn btn-warning" onClick={handleDelete}>
+                Delete Employee
+              </button>
+            )}
                 </div>
             </fieldset>
         </form>

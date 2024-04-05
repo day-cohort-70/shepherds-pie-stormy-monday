@@ -23,3 +23,10 @@ export const addEmployee = async (newEmployee) => {
     });
     return await response.json();
   };
+
+  export const deleteEmployee = async (id) => {
+    const response = await fetch(`http://localhost:8088/employees/${id}`, {
+      method: "DELETE",
+    });
+    return await response.json();
+  };
