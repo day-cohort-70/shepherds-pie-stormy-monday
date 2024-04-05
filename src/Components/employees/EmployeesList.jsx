@@ -19,7 +19,7 @@ export const EmployeeList = () => {
             address: "",
             phone: "",
             email: "",
-            admin: null
+            admin: false
         };
 
         // navigate to /employees/edit and pass the employee object

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom"
+import { addEmployee, updateEmployee } from "../../services/employeeService.js";
 import "./Employee.css"
 
 export const EmployeeDetails = () => {
@@ -19,17 +20,28 @@ export const EmployeeDetails = () => {
   
     const handleInputChange = (event) => {
         //maintain transient state 
-      const updatedEditedEmployee = { ...editedEmployee };
-      updatedEditedEmployee[event.target.name] = event.target.value;
-      setEditedEmployee(updatedEditedEmployee);
-    };
+        const updatedEditedEmployee = { ...editedEmployee };
+        if (event.target.name === "admin") {
+          updatedEditedEmployee.admin = event.target.value === "true";
+        } else {
+          updatedEditedEmployee[event.target.name] = event.target.value;
+        }
+        setEditedEmployee(updatedEditedEmployee);
+      };
   
-    const handleSave = (event) => {
-      event.preventDefault();
-      console.log("Clicked!");
-      setEmployee(editedEmployee);
-      //TODO: save function with employee service
-    };
+      const handleSave = async (event) => {
+        event.preventDefault();
+        console.log("Clicked!");
+    
+        if (editedEmployee.id === null) {
+          await addEmployee(editedEmployee);
+        } else {
+          await updateEmployee(editedEmployee.id, editedEmployee);
+        }
+    
+        setEmployee(editedEmployee);
+        console.log(editedEmployee);
+      };
    
     return <>
 
@@ -87,7 +99,33 @@ export const EmployeeDetails = () => {
                     required
                     className="form-control"
                     />
-
+            <fieldset>
+                <div className="form-group">
+                    <label>Admin</label>
+                    <div>
+                    <label>
+                        <input
+                        type="radio"
+                        name="admin"
+                        checked={editedEmployee?.admin === true}
+                        value="true"
+                        onChange={handleInputChange}
+                        />
+                        Yes
+                    </label>
+                    <label>
+                        <input
+                        type="radio"
+                        name="admin"
+                        checked={editedEmployee?.admin === false || editedEmployee?.admin === null}
+                        value="false"
+                        onChange={handleInputChange}
+                        />
+                        No
+                    </label>
+                    </div>
+                </div>
+            </fieldset>
                 </div>
             </fieldset>
             <fieldset>
