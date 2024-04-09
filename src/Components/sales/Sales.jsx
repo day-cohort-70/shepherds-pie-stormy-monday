@@ -21,8 +21,9 @@ export const Sales = () => {
     }, [])
 
     useEffect(() => {
-        if (chosenMonth > 0) {
-            const selectedMonthOrders = allOrders.filter(order => new Date(order.timestamp).getMonth() === chosenMonth)
+        if (chosenMonth !== 0) {
+            const chosenMonthNumber = chosenMonth - 1
+            const selectedMonthOrders = allOrders.filter(order => new Date(order.timestamp).getMonth() === chosenMonthNumber)
             setShowMonthOrder(selectedMonthOrders)
         } else {
             setShowMonthOrder(allOrders)

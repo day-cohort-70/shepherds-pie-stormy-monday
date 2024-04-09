@@ -2,8 +2,7 @@ export const SalesFilter = ({setChosenMonth}) => {
     return (
         <div>
             <select onChange={(event) => {
-                let monthNumber = parseInt(event.target.value)
-                setChosenMonth(monthNumber -1)
+                setChosenMonth(parseInt(event.target.value))
             }}>
                 <option value="0">Select Month</option>
                 <option value="1">January</option>
