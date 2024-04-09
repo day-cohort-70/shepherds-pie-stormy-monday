@@ -45,23 +45,3 @@ export const Sales = () => {
             })}
     </>
 }
-
-//ok lets think of what we need!
-/*
-
-  useEffect(() => {
-    if (showEmergencyOnly){
-      const emergencyTickets = allTickets.filter(ticket => ticket.emergency === true)
-      setFilteredTickets(emergencyTickets)
-    } else {
-      setFilteredTickets(allTickets)
-    }
-  }, [showEmergencyOnly, allTickets])
-
-first lets just populate with all the orders
-first is a month dropdown, this will filter what month is selected.
-how to get month? look at timestamps! get timestamps for month 1st-month31st
-want to populate with orders if they exist in that month. hooowwww
-show all orders for current month- use exisiting fetches
-make use of .filter
-*/
