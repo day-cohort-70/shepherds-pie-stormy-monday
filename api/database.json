@@ -163,6 +163,19 @@
             "id": 9,
             "pizzaId": 7,
             "toppingId": 5
+        },
+        {
+            "id": 6,
+            "pizzaId": 2,
+            "toppingId": 2
+        },{
+            "id": 7,
+            "pizzaId": 2,
+            "toppingId": 3
+        },{
+            "id": 8,
+            "pizzaId": 2,
+            "toppingId": 1
         }
     ],
     "toppings": [

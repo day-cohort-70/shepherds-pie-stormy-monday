@@ -1,5 +1,6 @@
 /* Import the google web fonts you want to use */
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300&family=Quicksand&family=Roboto:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Merriweather");
 
 /* FONTS
 font-family: "Nunito", sans-serif;
@@ -10,14 +11,14 @@ font-family: "Roboto", sans-serif;
 /* COLOR PALETTE */
 /* Feel free to change these values and create your own color palette! https://coolors.co/ is a great resource */
 :root {
-  --primary: #ffb400;
-  --secondary: #00a6ed;
-  --info: #7fb800;
+  --primary: #ed3e09;
+  --secondary: #ed3e09;
+  --info: #ed3e09;
   --warning: #f6511d;
   --white: #ffffff;
   --offWhite: #f2f2f3;
   --dark: #3b3b3b;
-  --outline: #c3c0c0;
+  --outline: #4f4a4a;
   --appBackground: #dddade;
 }
 
@@ -41,7 +42,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Roboto", serif;
+  font-family: "Merriweather", serif;
 }
 
 /* This prevents all the links in the app from having default underline */
@@ -74,7 +75,7 @@ button {
 }
 
 .btn-primary:hover {
-  background-color: #e5a000;
+  background-color: #bb3a12;
 }
 
 .btn-secondary {
@@ -82,7 +83,7 @@ button {
 }
 
 .btn-secondary:hover {
-  background-color: #0097d7;
+  background-color: #bb3a12;
 }
 
 .btn-warning {
@@ -98,5 +99,5 @@ button {
 }
 
 .btn-info:hover {
-  background-color: #71a500;
+  background-color: #bb3a12;
 }
