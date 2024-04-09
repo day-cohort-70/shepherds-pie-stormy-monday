@@ -5,6 +5,7 @@
     margin: 0;
     width: 100%;
     padding: 0.5rem;
+    height: 20px;
   }
 
   .navbar-item {
@@ -12,11 +13,11 @@
     list-style-type: none;
     text-align: center;
     color: var(--offWhite);
+    height: inherit;
   }
 
   .navbar-link {
     text-decoration: none;
-    font-family: "Quicksand", sans-serif;
     letter-spacing: 1px;
   }
 
@@ -24,6 +25,7 @@
     margin-left: auto;
   }
 
-  .navbar-link:hover {
-    color: var(--primary);
+  .navbar-item:hover {
+    transition: 0.3s;
+    border-bottom: 4px solid var(--primary);
   }

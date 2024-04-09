@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import "./Orders.css"
 
 export const OrdersFilter = ({setFilterDay, setFilterEOD}) => {
     
@@ -26,14 +27,15 @@ export const OrdersFilter = ({setFilterDay, setFilterEOD}) => {
     <button className="btn-primary"
     onClick={() =>{navigate('orders/create')}}> New Order </button>
     
-    <div className="dropdown"></div>
-    <label htmlFor="filterDay">Filter by Day:</label>
+    <div className="dropdown">
+    <label htmlFor="filterDay" className="filter-label">Filter by Day:</label>
     <input type="date" id="filterDay" name="filterDay" 
     onChange={(event) =>{
     event.target.value ? handleDateChange(event)
     : handleClear()
     }}
 />
+    </div>
     </div>
     )
 }
