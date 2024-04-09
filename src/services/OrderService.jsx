@@ -6,7 +6,7 @@ export const getOrderByDay = async (midnight, eod) => {
     return fetch (`http://localhost:8088/orders?timestamp_gte=${midnight}&timestamp_lte=${eod}&_sort=timestamp`).then(res=>res.json())
 }
 
-export const getOrderById = (orderId)=>{
+export const getPizzasByOrderId = (orderId)=>{
     return fetch (`http://localhost:8088/pizzas?id=${orderId}&_expand=crust&_expand=cheese&_expand=sauce&_embed=pizzaToppings`).then(res => res.json())
 }
 
@@ -18,6 +18,6 @@ export const getPizzaById = (pizzaId) =>{
     return fetch (`http://localhost:8088/pizzas?id=${pizzaId}&_expand=crust&_expand=cheese&_expand=sauce&_embed=pizzaToppings`).then(res => res.json())
 }
 
-export const getDelivererIdByOrderId = (orderId) => {
+export const getOrderWithOrderId = (orderId) => {
     return fetch (`http://localhost:8088/orders?id=${orderId}`).then(res => res.json())
 }
