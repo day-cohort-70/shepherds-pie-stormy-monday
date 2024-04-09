@@ -22,11 +22,10 @@
   /* This targets all the child elements of the element with the .ticket class */
   .order > * {
     padding: 0.5rem;
-    border: 1px dotted blue;
   }
 
   .order-info {
-    color: var(--outline);
+    color: black;
     font-family: "Roboto", sans-serif;
   }
 
@@ -56,10 +55,25 @@
 
   .filter-bar {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
   
   .btn-container {
     display: flex;
     justify-content: flex-end;
+  }
+
+  .dropdown {
+    display: flex;
+    align-items: center;
+    margin: 5px;
+  }
+
+  .filter-label {
+    padding: 5px;
+  }
+
+  .order:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: 0.3s;
   }

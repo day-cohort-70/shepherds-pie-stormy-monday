@@ -1,12 +1,12 @@
 .employee {
     background-color: var(--white);
-    border: 1px solid green;
+    border: 1px solid var(--primary);
     border-radius: 0.5rem;
     padding: 1rem;
   }
 
   .employee-info {
-    color: var(--info);
+    color: var(--primary);
     font-family: "Roboto", sans-serif;
   }
 
@@ -22,7 +22,7 @@
 
   .employee-edit {
     background-color: var(--white);
-    border: 1px solid green;
+    border: 1px solid var(--primary);
     border-radius: 0.5rem;
     padding: 1rem;
   }

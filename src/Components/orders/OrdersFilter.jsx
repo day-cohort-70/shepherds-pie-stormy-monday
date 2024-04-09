@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import "./Orders.css"
 
 export const OrdersFilter = ({ setFilterDay, setFilterEOD }) => {
     const navigate = useNavigate()
