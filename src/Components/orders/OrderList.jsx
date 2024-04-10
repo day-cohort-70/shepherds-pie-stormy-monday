@@ -36,22 +36,23 @@ export const OrderList = ({ currentUser }) => {
             <article className="orders">
                 {filteredOrders.map(orderObj => {
                     return (
-                        <Link to={`/orders/${orderObj.id}`}>
-                            <section className="order" key={orderObj.id}>
+                        <section className="order" key={orderObj.id}>
+                            <Link to={`/orders/${orderObj.id}`}>
                                 <header className="order-info">Order #{orderObj.id}</header>
-                                <footer>
-                                    <div className="order-info">{new Date(orderObj?.timestamp).toDateString()}</div>
-                                    {currentUser?.isAdmin && orderObj.delivererId !== 0 ? (
+                            </Link>
+                            <footer>
+                                <div className="order-info">{new Date(orderObj?.timestamp).toDateString()}</div>
+                                {orderObj.delivererId !== 0 ? (
 
-                                        <div>
-                                            < div className="order-info"> Deliverer: </div>
-                                            <Deliverer delivererId={orderObj.delivererId} />
-                                        </div>
+                                    <div>
+                                        < div className="order-info"> Deliverer: </div>
+                                        <Deliverer delivererId={orderObj.delivererId} />
+                                    </div>
 
-                                    ) : ("")}
-                                </footer>
-                            </section>
-                        </Link>
+                                ) : ("")}
+                            </footer>
+                        </section>
+
                     )
                 })}
             </article>

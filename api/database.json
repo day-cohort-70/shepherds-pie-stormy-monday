@@ -51,14 +51,14 @@
             "timestamp": 1712174457000,
             "tip": 2,
             "destination": "4",
-            "delivererId": 0
+            "delivererId": ""
         },{
             "id": 3,
             "employeeId": 4,
             "timestamp": 1712174457000,
             "tip": 0,
             "destination": "2",
-            "delivererId": 0
+            "delivererId": ""
         },{
             "id": 4,
             "employeeId": 3,

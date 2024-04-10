@@ -16,9 +16,30 @@ export const Deliverer = ({delivererId}) => {
         setDeliverer(found?.name)
     },[delivererId, employees])
 
+    const assignDeliverer = () =>{
+        console.log("this doesnt work yet")
+        //make a put for new deliverId and reload the page
+    }
+
     return(
-    <div className="employee">
-        {deliverer}
-    </div>
-    )
-}
+        <>
+        {delivererId ? (
+            <div className="employee">
+                {deliverer}
+            </div>
+            ) : (
+                <div className="dropdown">
+                    <select name="employees" 
+                    onChange={assignDeliverer}
+                    >
+                        <option value="" selected disabled hidden>Choose a Deliverer</option>
+                        {employees.map(employee=>{
+                            return(
+                                <option value={employee.id}>{employee.name}</option>
+                            )
+                        })}
+                    </select>
+                </div>
+            )}
+   </>
+)}
