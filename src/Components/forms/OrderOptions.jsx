@@ -1,6 +1,4 @@
-
-
-export const OrderOptions = ({ ingredients, handleToppingChange, handleCrustChange, handleCheeseChange, handleSauceChange }) => {
+export const OrderOptions = ({ ingredients, transientPizza, handleToppingChange, handleCrustChange, handleCheeseChange, handleSauceChange }) => {
     return (
         <div>
             <div>
@@ -12,6 +10,7 @@ export const OrderOptions = ({ ingredients, handleToppingChange, handleCrustChan
                             value={topping.id}
                             onChange={handleToppingChange}
                             id={`topping-${topping.id}`}
+                            checked={transientPizza.toppings.some(selectedTopping => selectedTopping.id === topping.id)}
                         />
                         <label htmlFor={`topping-${topping.id}`}>{topping.desc}</label>
                     </div>
@@ -19,7 +18,7 @@ export const OrderOptions = ({ ingredients, handleToppingChange, handleCrustChan
             </div>
             <div>
                 <h3>Crust</h3>
-                <select onChange={handleCrustChange}>
+                <select onChange={handleCrustChange} value={transientPizza.crust || ''}>
                     <option value="">Select a crust</option>
                     {ingredients.crusts.map(crust => (
                         <option key={crust.id} value={crust.id}>{crust.desc}</option>
@@ -28,7 +27,7 @@ export const OrderOptions = ({ ingredients, handleToppingChange, handleCrustChan
             </div>
             <div>
                 <h3>Cheese</h3>
-                <select onChange={handleCheeseChange}>
+                <select onChange={handleCheeseChange} value={transientPizza.cheese || ''}>
                     <option value="">Select a cheese</option>
                     {ingredients.cheeses.map(cheese => (
                         <option key={cheese.id} value={cheese.id}>{cheese.desc}</option>
@@ -37,7 +36,7 @@ export const OrderOptions = ({ ingredients, handleToppingChange, handleCrustChan
             </div>
             <div>
                 <h3>Sauce</h3>
-                <select onChange={handleSauceChange}>
+                <select onChange={handleSauceChange} value={transientPizza.sauce || ''}>
                     <option value="">Select a sauce</option>
                     {ingredients.sauces.map(sauce => (
                         <option key={sauce.id} value={sauce.id}>{sauce.desc}</option>
@@ -47,4 +46,3 @@ export const OrderOptions = ({ ingredients, handleToppingChange, handleCrustChan
         </div>
     );
 };
-

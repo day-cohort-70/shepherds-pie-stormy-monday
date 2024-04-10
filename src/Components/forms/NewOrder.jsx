@@ -19,6 +19,7 @@ export const NewOrder = () => {
         cheese: 0,
         sauce: 0
     }); // State to hold the current pizza selection temporarily
+    const [deliveryDestination, setDeliveryDestination] = useState(''); // State for delivery destination
 
     useEffect(() => {
         Promise.all([
@@ -42,7 +43,11 @@ export const NewOrder = () => {
 
     useEffect(() => {
         console.log(transientPizza);
-    }, [transientPizza]); // This effect runs whenever `transientPizza` changes
+    }, [transientPizza]);
+
+    useEffect(() => {
+        console.log(order);
+    }, [order]);
     
 
     const handleToppingChange = (event) => {
@@ -97,6 +102,7 @@ export const NewOrder = () => {
                 cheese: 0,
                 sauce: 0
             });
+            window.alert(`Pizza added to order.`)
         }
         else {
             window.alert(`Please make a selection.`)
@@ -113,11 +119,25 @@ export const NewOrder = () => {
             sauce: 0
         });
         setOrder([]);
+        window.alert(`Order cleared.`)
     };
 
     const handleOrder = () => {
-        // Implement the logic to place the order using the placeNewOrder function
-        console.log("Order placed.");
+        if (deliveryDestination.trim() === '') {
+            window.alert("Please select a delivery destination.");
+        } else {
+            // add the delivery destination to the order
+            if (transientPizza.cheese !== 0 && transientPizza.crust !== 0 && transientPizza.sauce !== 0) {
+                setOrder(prevPizzas => [...prevPizzas, transientPizza]);
+            }
+            const newOrder = {
+                ...order,
+                deliveryDestination
+            };
+            setOrder(newOrder);
+            window.alert("Order placed.");
+            console.log(newOrder);
+        }
     };
 
     return (
@@ -125,14 +145,29 @@ export const NewOrder = () => {
             <h2>New Order</h2>
             <OrderOptions
                 ingredients={ingredients}
+                transientPizza={transientPizza}
                 handleToppingChange={handleToppingChange}
                 handleCrustChange={handleCrustChange}
                 handleCheeseChange={handleCheeseChange}
                 handleSauceChange={handleSauceChange}
             />
-            <button className="btn-primary btn-neworder" onClick={addPizza}>Add Pizza</button>
-            <button className="btn-primary btn-neworder" onClick={clearOrder}>Clear Order</button>
-            <button className="btn-primary btn-neworder" onClick={handleOrder}>Place Order</button>
+            
+            <div className="order-controls-container">
+            <div>
+                <label htmlFor="deliveryDestination">Delivery Destination: </label>
+                <input
+                    type="text"
+                    id="deliveryDestination"
+                    value={deliveryDestination}
+                    onChange={(e) => setDeliveryDestination(e.target.value)}
+                    placeholder="Enter destination"
+                />
+            </div>
+                <button className="btn-primary btn-neworder" onClick={addPizza}>Add Pizza</button>
+                <button className="btn-primary btn-neworder" onClick={clearOrder}>Clear Order</button>
+                <button className="btn-primary btn-neworder" onClick={handleOrder}>Place Order</button>
+            </div>
+            
         </div>
     );
 };
