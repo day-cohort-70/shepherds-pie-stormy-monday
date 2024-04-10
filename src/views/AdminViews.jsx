@@ -6,6 +6,7 @@ import { EmployeeList } from "../components/employees/EmployeesList.jsx"
 import { EmployeeDetails } from "../components/employees/EmployeeDetails.jsx"
 import { OrderView } from "../components/orders/OrderView.jsx"
 import { Sales } from "../components/sales/Sales.jsx"
+import { EditPizza } from "../components/forms/EditPizza.jsx"
 
 export const AdminViews = ({currentUser}) => {
     return (
@@ -23,6 +24,7 @@ export const AdminViews = ({currentUser}) => {
         </Route>        
         <Route index element ={<OrderList currentUser={currentUser} />} />
         <Route path="orders/:orderId" element={<OrderView />}/>
+        <Route path="orders/edit/:pizzaId" element={<EditPizza/>}/>
         <Route path="sales" element={<Sales/>}/>
         </Route>
         </Routes>

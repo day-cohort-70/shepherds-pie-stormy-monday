@@ -21,3 +21,10 @@ export const getPizzaById = (pizzaId) =>{
 export const getOrderWithOrderId = (orderId) => {
     return fetch (`http://localhost:8088/orders?id=${orderId}`).then(res => res.json())
 }
+
+export const DeleteOrder = async (orderId) => {
+    const deleteOptions = {
+        method: "DELETE"
+    }
+    const response = await fetch(`http://localhost:8088/orders/${orderId}`, deleteOptions)
+}
