@@ -10,6 +10,8 @@ export const OrderList = ({ currentUser }) => {
     //starts with time range of 1970 - 2200
     const [filterDay, setFilterDay] = useState(0)
     const [filterEOD, setFilterEOD] = useState(7266292443815)
+    //this state listens for a deliverer to be assigned
+    const [newDelivererId, setNewDelivererId] = useState(0)
 
 
     //shows all orders with a timestamp within a certain day UTC
@@ -26,7 +28,7 @@ export const OrderList = ({ currentUser }) => {
         const beginning = parseInt(filterDay)
         const end = parseInt(filterEOD)
         getAndSetAllOrders(beginning, end)
-    }, [filterDay])
+    }, [filterDay, newDelivererId])
 
 
     return (
@@ -46,7 +48,7 @@ export const OrderList = ({ currentUser }) => {
 
                                     <div>
                                         < div className="order-info"> Deliverer: </div>
-                                        <Deliverer delivererId={orderObj.delivererId} />
+                                        <Deliverer delivererId={orderObj.delivererId} order={orderObj} setNewDelivererId={setNewDelivererId} />
                                     </div>
 
                                 ) : ("")}
