@@ -3,7 +3,6 @@
 export const OrderOptions = ({ ingredients, handleToppingChange, handleCrustChange, handleCheeseChange, handleSauceChange }) => {
     return (
         <div>
-            <h2>Order Options</h2>
             <div>
                 <h3>Toppings</h3>
                 {ingredients.toppings.map(topping => (

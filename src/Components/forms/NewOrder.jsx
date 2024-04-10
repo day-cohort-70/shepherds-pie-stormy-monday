@@ -1,8 +1,7 @@
-
 import { useEffect, useState } from 'react';
 import { getNextOrderId } from "../../services/OrderService.jsx";
 import { getCheeses, getToppings, getCrusts, getSauces } from "../../services/ingredientService.js";
-import OrderOptions from './OrderOptions'; 
+import { OrderOptions } from './OrderOptions.jsx'; 
 
 export const NewOrder = () => {
     const [ingredients, setIngredients] = useState({
@@ -11,13 +10,15 @@ export const NewOrder = () => {
         cheeses: [],
         sauces: []
     });
-    const [order, setOrder] = useState({
+    const [order, setOrder] = useState([]);
+    const [orderId, setOrderId] = useState(null);
+    const [pizzas, setPizzas] = useState([]); // State to hold the list of pizzas added to the order
+    const [transientPizza, setTransientPizza] = useState({
         toppings: [],
         crust: 0,
         cheese: 0,
         sauce: 0
-    });
-    const [orderId, setOrderId] = useState(null);
+    }); // State to hold the current pizza selection temporarily
 
     useEffect(() => {
         Promise.all([
@@ -39,44 +40,82 @@ export const NewOrder = () => {
         });
     }, []);
 
+    useEffect(() => {
+        console.log(transientPizza);
+    }, [transientPizza]); // This effect runs whenever `transientPizza` changes
+    
+
     const handleToppingChange = (event) => {
         const toppingId = parseInt(event.target.value);
         const isChecked = event.target.checked;
-        const toppingIndex = order.toppings.findIndex(topping => topping.id === toppingId);
+        const toppingIndex = transientPizza.toppings.findIndex(topping => topping.id === toppingId);
 
         if (isChecked) {
             if (toppingIndex === -1) {
-                setOrder(prevOrder => ({
+                setTransientPizza(prevOrder => ({
                     ...prevOrder,
                     toppings: [...prevOrder.toppings, ingredients.toppings.find(topping => topping.id === toppingId)]
                 }));
             }
         } else {
             if (toppingIndex !== -1) {
-                setOrder(prevOrder => ({
+                setTransientPizza(prevOrder => ({
                     ...prevOrder,
                     toppings: prevOrder.toppings.filter(topping => topping.id !== toppingId)
                 }));
             }
         }
+        
+        
     };
 
     const handleCrustChange = (event) => {
         const crustId = parseInt(event.target.value);
-        setOrder(prevOrder => ({ ...prevOrder, crust: crustId }));
+        setTransientPizza(prevOrder => ({ ...prevOrder, crust: crustId }));
+        
     };
 
     const handleCheeseChange = (event) => {
         const cheeseId = parseInt(event.target.value);
-        setOrder(prevOrder => ({ ...prevOrder, cheese: cheeseId }));
+        setTransientPizza(prevOrder => ({ ...prevOrder, cheese: cheeseId }));
+        
     };
 
     const handleSauceChange = (event) => {
         const sauceId = parseInt(event.target.value);
-        setOrder(prevOrder => ({ ...prevOrder, sauce: sauceId }));
+        setTransientPizza(prevOrder => ({ ...prevOrder, sauce: sauceId }));
+        
     };
 
-    const placeOrder = () => {
+    const addPizza = () => {
+        if (transientPizza.cheese !== 0 && transientPizza.crust !== 0 && transientPizza.sauce !== 0) {
+            setOrder(prevPizzas => [...prevPizzas, transientPizza]);
+            // Clear the current pizza selection
+            setTransientPizza({
+                toppings: [],
+                crust: 0,
+                cheese: 0,
+                sauce: 0
+            });
+        }
+        else {
+            window.alert(`Please make a selection.`)
+        }
+        
+    };
+
+    const clearOrder = () => {
+        // Clear all selections and previously selected pizzas
+        setTransientPizza({
+            toppings: [],
+            crust: 0,
+            cheese: 0,
+            sauce: 0
+        });
+        setOrder([]);
+    };
+
+    const handleOrder = () => {
         // Implement the logic to place the order using the placeNewOrder function
         console.log("Order placed.");
     };
@@ -91,7 +130,9 @@ export const NewOrder = () => {
                 handleCheeseChange={handleCheeseChange}
                 handleSauceChange={handleSauceChange}
             />
-            <button onClick={placeOrder}>Place Order</button>
+            <button className="btn-primary btn-neworder" onClick={addPizza}>Add Pizza</button>
+            <button className="btn-primary btn-neworder" onClick={clearOrder}>Clear Order</button>
+            <button className="btn-primary btn-neworder" onClick={handleOrder}>Place Order</button>
         </div>
     );
 };

@@ -101,3 +101,7 @@ button {
 .btn-info:hover {
   background-color: #bb3a12;
 }
+
+.btn-neworder {
+    margin-top: 1em;
+}
