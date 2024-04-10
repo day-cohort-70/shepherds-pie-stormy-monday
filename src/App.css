@@ -101,3 +101,18 @@ button {
 .btn-info:hover {
   background-color: #bb3a12;
 }
+
+.btn-neworder {
+    margin-top: 1em;
+}
+
+.order-controls-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    gap: 5px;
+}
+
+#deliveryDestination {
+    height: 18.5px;
+}
