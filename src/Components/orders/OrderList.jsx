@@ -10,6 +10,8 @@ export const OrderList = ({ currentUser }) => {
     //starts with time range of 1970 - 2200
     const [filterDay, setFilterDay] = useState(0)
     const [filterEOD, setFilterEOD] = useState(7266292443815)
+    //this state listens for a deliverer to be assigned
+    const [newDelivererId, setNewDelivererId] = useState(0)
 
 
     //shows all orders with a timestamp within a certain day UTC
@@ -26,7 +28,7 @@ export const OrderList = ({ currentUser }) => {
         const beginning = parseInt(filterDay)
         const end = parseInt(filterEOD)
         getAndSetAllOrders(beginning, end)
-    }, [filterDay])
+    }, [filterDay, newDelivererId])
 
 
     return (
@@ -36,22 +38,23 @@ export const OrderList = ({ currentUser }) => {
             <article className="orders">
                 {filteredOrders.map(orderObj => {
                     return (
-                        <Link to={`/orders/${orderObj.id}`}>
-                            <section className="order" key={orderObj.id}>
+                        <section className="order" key={orderObj.id}>
+                            <Link to={`/orders/${orderObj.id}`}>
                                 <header className="order-info">Order #{orderObj.id}</header>
-                                <footer>
-                                    <div className="order-info">{new Date(orderObj?.timestamp).toDateString()}</div>
-                                    {currentUser?.isAdmin && orderObj.delivererId !== 0 ? (
+                            </Link>
+                            <footer>
+                                <div className="order-info">{new Date(orderObj?.timestamp).toDateString()}</div>
+                                {orderObj.delivererId !== 0 ? (
 
-                                        <div>
-                                            < div className="order-info"> Deliverer: </div>
-                                            <Deliverer delivererId={orderObj.delivererId} />
-                                        </div>
+                                    <div>
+                                        < div className="order-info"> Deliverer: </div>
+                                        <Deliverer delivererId={orderObj.delivererId} order={orderObj} setNewDelivererId={setNewDelivererId} />
+                                    </div>
 
-                                    ) : ("")}
-                                </footer>
-                            </section>
-                        </Link>
+                                ) : ("")}
+                            </footer>
+                        </section>
+
                     )
                 })}
             </article>
