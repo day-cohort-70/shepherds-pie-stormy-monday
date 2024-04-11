@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { getCrusts, getSauces } from "../../services/pizzaService.js"
+import { getCrusts, getSauces, getToppings } from "../../services/pizzaService.js"
 import { getPizzaById } from "../../services/OrderService.jsx"
 import { getCheeses } from "../../services/pizzaService.js"
 
@@ -12,6 +12,7 @@ export const EditPizza = () => {
     const [crusts, setCrusts] = useState([])
     const [sauces, setSauces] = useState([])
     const [cheeses, setCheeses] = useState([])
+    const [toppings, setToppings] = useState([])
     //add state for topppings
     const [currentPizza, setCurrentPizza] = useState({})
 
@@ -25,6 +26,9 @@ export const EditPizza = () => {
         getCheeses().then((cheeseArr)=>{
             setCheeses(cheeseArr)
         })
+        getToppings().then((toppingArr)=>{
+            setToppings(toppingArr)
+        })
     }, [])
 
     useEffect(() => {
@@ -33,6 +37,10 @@ export const EditPizza = () => {
             setCurrentPizza(pizzaObj)
         })
     }, [pizzaId])
+
+    const checkFunction = (topping) => {
+        return currentPizza.pizzaToppings?.some(toppingObj => toppingObj.toppingId === topping)}
+    
 
     return (
         <form className="edit-pizza">
@@ -79,6 +87,21 @@ export const EditPizza = () => {
                     </select>
                 </div>
                 {/* add radio buttons for toppings */}
+                <div>
+                <label>Toppings</label>
+                {toppings.map(topping => (
+                    <div key={topping.id}>
+                        <input
+                            type="checkbox"
+                            value={topping.id}
+                            // onChange={handleToppingChange}
+                            id={`topping-${topping.id}`}
+                            defaultChecked={checkFunction(topping.id)}        
+                                      />
+                        <label htmlFor={`topping-${topping.id}`}>{topping.desc}</label>
+                    </div>
+                ))}
+                </div>
             </fieldset>
         </form>
     )

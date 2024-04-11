@@ -36,7 +36,7 @@ export const OrderList = ({ currentUser }) => {
     }
 
     const updateOrders = async () => {
-        await getOrderByDay(parseInt(filterDay), parseInt(filterEOD)).then(ordersArray => {
+        getOrderByDay(parseInt(filterDay), parseInt(filterEOD)).then(ordersArray => {
             const reverseArray = ordersArray.map(order => order).reverse()
             setFilteredOrders(reverseArray)
     })
@@ -63,6 +63,17 @@ export const OrderList = ({ currentUser }) => {
                                     </div>
 
                                 ) : ("")}
+                                <div className="btn-container">
+                                        <button className="delete-btn"
+                                        value={orderObj.id}
+                                        onClick={async () =>{
+                                            await OrderDeleted(orderObj.id).then(()=>{
+                                            updateOrders()})
+                                        }}
+                                        >
+                                            <i className="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </div>
                             </footer>
                         </section>
 
