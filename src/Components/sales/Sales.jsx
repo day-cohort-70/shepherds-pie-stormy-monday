@@ -63,7 +63,7 @@ export const Sales = () => {
                 if (order.id === pizza.orderId) {
                     crustNumber += pizza.crust.price
                     let allToppings = pizza.pizzaToppings
-                    crustNumber += allToppings.length
+                    crustNumber += (allToppings.length)/2
                 }
             }
         }
