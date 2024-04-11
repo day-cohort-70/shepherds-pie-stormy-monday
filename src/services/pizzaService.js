@@ -10,3 +10,6 @@ export const getCheeses = () => {
 export const getToppings = () => {
     return fetch("http://localhost:8088/toppings").then((res) => res.json());
 }
+export const getPizzaNotExpanded = (pizzaId) => {
+    return fetch(`http://localhost:8088/pizzas?id=${pizzaId}&_embed=pizzaToppings`).then((res) => res.json());
+}
