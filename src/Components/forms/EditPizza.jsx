@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCrusts, getPizzaNotExpanded, getSauces, getToppings } from "../../services/pizzaService.js";
-import { getPizzaById } from "../../services/OrderService.jsx";
+import { getCrusts, getPizzaNotExpanded, getSauces, getToppings, getPizzaToppings, updatePizza, addToppings } from "../../services/pizzaService.js";
+import { getPizzaById, getToppingsByPizzaId, getToppingsByPizzaIdWithoutExpansion } from "../../services/OrderService.jsx";
 import { getCheeses } from "../../services/pizzaService.js";
 
 
@@ -13,8 +13,13 @@ export const EditPizza = () => {
     const [crusts, setCrusts] = useState([]);
     const [sauces, setSauces] = useState([]);
     const [cheeses, setCheeses] = useState([]);
-    const [toppings, setToppings] = useState([]);
-    const [currentPizza, setCurrentPizza] = useState({});
+    const [toppings, setToppings] = useState([])
+    //all toppings that exist
+    const [currentPizza, setCurrentPizza] = useState({})
+    const [currentPizzaToppings, setCurrentPizzaToppings] = useState([])
+    const [addedToppings, setAddedToppings] = useState([])
+    const [deletedToppings, setDeletedToppings] = useState([])
+    // const [allPizzaToppingsThatExist, setAllPizzaToppingsThatExist] = useState([])
 
     useEffect(() => {
         getCrusts().then((crustArr) => {
@@ -29,53 +34,81 @@ export const EditPizza = () => {
         getToppings().then((toppingArr) => {
             setToppings(toppingArr);
         });
+        // getPizzaToppings().then((toppingArr)=>{
+        //     setAllPizzaToppingsThatExist(toppingArr)
+        // })
     }, []);
 
     useEffect(() => {
         getPizzaById(pizzaId).then((pizzaArr) => {
             const pizzaObj = pizzaArr[0];
             setCurrentPizza(pizzaObj);
+            setCurrentPizzaToppings(pizzaObj.pizzaToppings)
         });
     }, [pizzaId]);
 
-    //I think this needs its own fetch call to set the editted pizza without the expansions 
     useEffect(() => {
         getPizzaNotExpanded(pizzaId).then((pizzaArr) => {
             const pizzaObj = pizzaArr[0];
             setEdittedPizza(pizzaObj);
         });
-    }, [currentPizza]);
+    }, [currentPizza])
+
+    // useEffect(() => {
+    //     getPizzaToppings().then((pizzaToppingArr) => {
+    //         setPizzaToppings(pizzaToppingArr);
+    //     });
+    // }, [currentPizza]);
 
     const checkFunction = (topping) => {
-        return currentPizza?.pizzaToppings?.some(toppingObj => toppingObj.toppingId === topping);
+        return currentPizzaToppings.some(toppingObj => toppingObj.toppingId === topping);
     };
 
     //this is not currently editting the state
-    const handleToppingChange = (event) => {
-        debugger;
+    const handleToppingChange = async (event) => {
         const toppingId = parseInt(event.target.value);
         const isChecked = event.target.checked;
         //does it exist already in the pizza?
-        const toppingIndex = edittedPizza?.pizzaToppings?.findIndex(toppingObj => toppingObj.toppingId === toppingId);
+        const toppingIndex = currentPizza.pizzaToppings.findIndex(toppingObj => toppingObj.toppingId === toppingId);
 
         if (isChecked) {
             if (toppingIndex === -1) {
-                setEdittedPizza(edittedPizza => ({
-                    ...edittedPizza,
-                    toppings: [...edittedPizza?.pizzaToppings, pizzaToppings.find(topping => topping.id === toppingId)]
-                }));
-            }
+                const newObj = {
+                    id: Date.now(),
+                    pizzaId: parseInt(pizzaId),
+                    toppingId: toppingId
+                }
+                setCurrentPizzaToppings([...currentPizzaToppings, newObj])
+                // setAddedToppings(newObj)
+            } 
+            //delete works
         } else {
             if (toppingIndex !== -1) {
-                setEdittedPizza(edittedPizza => ({
-                    ...edittedPizza,
-                    pizzaToppings: edittedPizza?.pizzaToppings.filter(topping => topping.id !== toppingId)
-                }));
-            }
+                setCurrentPizzaToppings(currentPizzaToppings.filter(toppingObj => toppingObj.toppingId !== toppingId))
+                // const newObj = {
+                //     id: toppingIndex + 1,
+                //     pizzaId: parseInt(pizzaId),
+                //     toppingId: toppingId
+                // }
+                // const copy = [...deletedToppings]
+                // console.log(copy)
+                // copy.push(newObj)
+                // console.log(copy)
+        }}}
+
+        const handleSave = async(e) => {
+            e.preventDefault()
+            updatePizza(edittedPizza)
+            {addedToppings.map((toppingObj)=>{
+            addToppings(toppingObj)
+
+            //TODO
+            //if they exist in currentPizzaToppings, but not currentPizza.pizzaToppings then add with POST - done a different way
+            // if they exist in currentPizza.pizzaToppings but not currentPizzaToppings then DELETE
+            //to do above, you can use findIndex to see if it exists in currentPizzaToppings, while mapping through currentPizza.pizzaToppings
+            //if index = -1 then delete
+        })}
         }
-
-
-    }
 
 
     return (
@@ -87,7 +120,7 @@ export const EditPizza = () => {
                     <select name="crust"
                         onChange={(event) => {
                             const copy = { ...edittedPizza }
-                            copy.crustId = event.target.value
+                            copy.crustId = parseInt(event.target.value)
                             setEdittedPizza(copy)
                         }}
                     >
@@ -106,8 +139,7 @@ export const EditPizza = () => {
                     <select name="sauce"
                         onChange={(event) => {
                             const copy = { ...edittedPizza }
-                            copy.sauceId = event.target.value
-                            setEdittedPizza(copy)
+                            copy.sauceId = parseInt(event.target.value)
                         }}
                     >
                         <option defaultValue={currentPizza?.sauce?.desc} hidden> {currentPizza?.sauce?.desc} </option>
@@ -125,7 +157,7 @@ export const EditPizza = () => {
                     <select name="cheese"
                         onChange={(event) => {
                             const copy = { ...edittedPizza }
-                            copy.cheeseId = event.target.value
+                            copy.cheeseId = parseInt(event.target.value)
                             setEdittedPizza(copy)
                         }}
                     >
@@ -147,7 +179,7 @@ export const EditPizza = () => {
                                 type="checkbox"
                                 value={topping.id}
                                 id={`topping-${topping.id}`}
-                                defaultChecked={checkFunction(topping.id)}
+                                checked={checkFunction(topping.id)}
                                 onChange={handleToppingChange}
                             />
                             <label htmlFor={`topping-${topping.id}`}>{topping.desc}</label>
@@ -155,7 +187,9 @@ export const EditPizza = () => {
                     ))}
                 </div>
             </fieldset>
-            <button className="btn-primary">Save</button>
+            <button className="btn-primary"
+            onClick={handleSave}
+            >Save</button>
         </form>
     );
 };
