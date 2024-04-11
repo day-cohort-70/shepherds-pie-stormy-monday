@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getAllOrdersSortedByTime, getAllPizzas, getPizzasByOrderId, getToppingsByPizzaId } from "../../services/OrderService"
+import { getAllOrdersSortedByTime, getAllPizzas } from "../../services/OrderService"
 import { Link } from "react-router-dom"
 import "../orders/Orders.css"
 import { SalesFilter } from "./SalesFilter"
@@ -13,7 +13,6 @@ export const Sales = () => {
     const [orderTotal, setOrderTotal] = useState(0)
     const [crustTotal, setCrustTotal] = useState(0)
     const [totalSales, setTotalSales] = useState(0)
-    //const [toppingArray, setToppingArray] = useState([])
 
     const getAndSetAllOrders = () => {
         getAllOrdersSortedByTime().then((orderArray) => {
@@ -94,21 +93,3 @@ export const Sales = () => {
             })}
     </>
 }
-
-/*
-        const pizzaCrustPrice = (orderId) => {
-        getPizzasByOrderId(orderId).then((array) =>{setPizzaArray(array)})
-        let crustPrice = 0
-            for (const pizzaObj of pizzaArray) {
-                crustPrice += pizzaObj.crust.price
-                console.log(pizzaObj.crust.price)
-            }
-        console.log(crustPrice)
-        return crustPrice
-    }
-//third layer is getting prices from toppings
-                    getToppingsByPizzaId(pizzaObj.id).then((array) => {setToppingArray(array)})
-                    for (const toppingObj of toppingArray) {
-                        totalSalesEditedNumber += toppingObj.topping.price
-                    }
- */
