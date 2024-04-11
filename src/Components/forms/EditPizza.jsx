@@ -1,61 +1,62 @@
-import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { getCrusts, getPizzaNotExpanded, getSauces, getToppings } from "../../services/pizzaService.js"
-import { getPizzaById } from "../../services/OrderService.jsx"
-import { getCheeses } from "../../services/pizzaService.js"
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getCrusts, getPizzaNotExpanded, getSauces, getToppings } from "../../services/pizzaService.js";
+import { getPizzaById } from "../../services/OrderService.jsx";
+import { getCheeses } from "../../services/pizzaService.js";
+
 
 
 export const EditPizza = () => {
-    const [edittedPizza, setEdittedPizza] = useState({})
-    const { pizzaId } = useParams()
-    const navigate = useNavigate()
-    const [crusts, setCrusts] = useState([])
-    const [sauces, setSauces] = useState([])
-    const [cheeses, setCheeses] = useState([])
-    const [toppings, setToppings] = useState([])
-    const [currentPizza, setCurrentPizza] = useState({})
+    const [edittedPizza, setEdittedPizza] = useState({});
+    const { pizzaId } = useParams();
+    const navigate = useNavigate();
+    const [crusts, setCrusts] = useState([]);
+    const [sauces, setSauces] = useState([]);
+    const [cheeses, setCheeses] = useState([]);
+    const [toppings, setToppings] = useState([]);
+    const [currentPizza, setCurrentPizza] = useState({});
 
     useEffect(() => {
         getCrusts().then((crustArr) => {
-            setCrusts(crustArr)
-        })
+            setCrusts(crustArr);
+        });
         getSauces().then((sauceArr) => {
-            setSauces(sauceArr)
-        })
+            setSauces(sauceArr);
+        });
         getCheeses().then((cheeseArr) => {
-            setCheeses(cheeseArr)
-        })
+            setCheeses(cheeseArr);
+        });
         getToppings().then((toppingArr) => {
-            setToppings(toppingArr)
-        })
-    }, [])
+            setToppings(toppingArr);
+        });
+    }, []);
 
     useEffect(() => {
         getPizzaById(pizzaId).then((pizzaArr) => {
-            const pizzaObj = pizzaArr[0]
-            setCurrentPizza(pizzaObj)
-        })
-    }, [pizzaId])
+            const pizzaObj = pizzaArr[0];
+            setCurrentPizza(pizzaObj);
+        });
+    }, [pizzaId]);
 
     //I think this needs its own fetch call to set the editted pizza without the expansions 
-    useEffect(()=>{
-       getPizzaNotExpanded(pizzaId).then((pizzaArr)=>{
-       const pizzaObj = pizzaArr[0]
-        setEdittedPizza(pizzaObj)
-       })
-    }, [currentPizza])
+    useEffect(() => {
+        getPizzaNotExpanded(pizzaId).then((pizzaArr) => {
+            const pizzaObj = pizzaArr[0];
+            setEdittedPizza(pizzaObj);
+        });
+    }, [currentPizza]);
 
     const checkFunction = (topping) => {
-        return currentPizza?.pizzaToppings?.some(toppingObj => toppingObj.toppingId === topping)
-    }
+        return currentPizza?.pizzaToppings?.some(toppingObj => toppingObj.toppingId === topping);
+    };
 
     //this is not currently editting the state
     const handleToppingChange = (event) => {
-        debugger
+        debugger;
         const toppingId = parseInt(event.target.value);
-        const isChecked = event.target.checked; 
+        const isChecked = event.target.checked;
         //does it exist already in the pizza?
-        const toppingIndex = edittedPizza?.pizzaToppings?.findIndex(topping => topping.toppingId === toppingId);
+        const toppingIndex = edittedPizza?.pizzaToppings?.findIndex(toppingObj => toppingObj.toppingId === toppingId);
 
         if (isChecked) {
             if (toppingIndex === -1) {
@@ -154,7 +155,9 @@ export const EditPizza = () => {
                     ))}
                 </div>
             </fieldset>
-<button className="btn-primary">Save</button>
+            <button className="btn-primary">Save</button>
         </form>
-    )
-}
+    );
+};
+
+
