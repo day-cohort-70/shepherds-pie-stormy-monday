@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react"
-import { getAllOrdersSortedByTime } from "../../services/OrderService"
+import { getAllOrdersSortedByTime, getAllPizzas, getPizzasByOrderId, getToppingsByPizzaId } from "../../services/OrderService"
 import { Link } from "react-router-dom"
 import "../orders/Orders.css"
 import { SalesFilter } from "./SalesFilter"
+import { SalesTotal } from "./SalesTotal"
 
 export const Sales = () => {
     const [allOrders, setAllOrders] = useState([])
     const [chosenMonth, setChosenMonth] = useState(0)
     const [showMonthOrder, setShowMonthOrder] = useState([])
+    const [allPizzas, setAllPizzas] = useState([])
+    const [orderTotal, setOrderTotal] = useState(0)
+    const [crustTotal, setCrustTotal] = useState(0)
+    const [totalSales, setTotalSales] = useState(0)
+    //const [toppingArray, setToppingArray] = useState([])
 
     const getAndSetAllOrders = () => {
         getAllOrdersSortedByTime().then((orderArray) => {
@@ -16,8 +22,16 @@ export const Sales = () => {
         })
     }
 
+    const getAndSetAllPizzas = () => {
+        getAllPizzas().then((pizzaArray) => {
+            setAllPizzas(pizzaArray)
+        })
+    }
+
+
     useEffect(() => {
         getAndSetAllOrders()
+        getAndSetAllPizzas()
     }, [])
 
     useEffect(() => {
@@ -30,8 +44,42 @@ export const Sales = () => {
         }
     }, [chosenMonth, allOrders])
 
+    //first layer is getting prices on order itself
+    useEffect(() => {
+        let totalOrderNumber = 0
+        for (const order of showMonthOrder) {
+            totalOrderNumber += order.tip
+            if (order.delivererId !== 0){
+                totalOrderNumber += 5
+            }
+        }
+        setOrderTotal(totalOrderNumber)
+    }, [showMonthOrder])
+
+    //second layer is getting prices from pizza crust and toppings
+    useEffect(() => {
+        let crustNumber = 0
+        for (const order of showMonthOrder) {
+            for (const pizza of allPizzas) {
+                if (order.id === pizza.orderId) {
+                    crustNumber += pizza.crust.price
+                    let allToppings = pizza.pizzaToppings
+                    crustNumber += allToppings.length
+                }
+            }
+        }
+        setCrustTotal(crustNumber)
+    }, [orderTotal, showMonthOrder, allPizzas])
+
+    //combining all the prices
+    useEffect(() => {
+        let totalSalesNumber = crustTotal + orderTotal
+        setTotalSales(totalSalesNumber)
+    }, [crustTotal, orderTotal, showMonthOrder])
+
     return <>
     <SalesFilter setChosenMonth={setChosenMonth}/>
+    <SalesTotal totalSales={totalSales}/>
     {showMonthOrder.map(orderObj =>{
                 return(
                     <Link to={`/orders/${orderObj.id}`}>
@@ -46,3 +94,21 @@ export const Sales = () => {
             })}
     </>
 }
+
+/*
+        const pizzaCrustPrice = (orderId) => {
+        getPizzasByOrderId(orderId).then((array) =>{setPizzaArray(array)})
+        let crustPrice = 0
+            for (const pizzaObj of pizzaArray) {
+                crustPrice += pizzaObj.crust.price
+                console.log(pizzaObj.crust.price)
+            }
+        console.log(crustPrice)
+        return crustPrice
+    }
+//third layer is getting prices from toppings
+                    getToppingsByPizzaId(pizzaObj.id).then((array) => {setToppingArray(array)})
+                    for (const toppingObj of toppingArray) {
+                        totalSalesEditedNumber += toppingObj.topping.price
+                    }
+ */
