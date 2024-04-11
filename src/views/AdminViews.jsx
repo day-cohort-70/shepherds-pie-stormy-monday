@@ -4,8 +4,10 @@ import { AdminNav } from "../components/nav/AdminNav.jsx"
 import { OrderList } from "../components/orders/OrderList.jsx"
 import { EmployeeList } from "../components/employees/EmployeesList.jsx"
 import { EmployeeDetails } from "../components/employees/EmployeeDetails.jsx"
+import { NewOrder } from "../components/forms/NewOrder.jsx"
 import { OrderView } from "../components/orders/OrderView.jsx"
 import { Sales } from "../components/sales/Sales.jsx"
+
 
 export const AdminViews = ({currentUser}) => {
     return (
@@ -23,6 +25,7 @@ export const AdminViews = ({currentUser}) => {
         </Route>        
         <Route index element ={<OrderList currentUser={currentUser} />} />
         <Route path="orders/:orderId" element={<OrderView />}/>
+        <Route path="orders/create" element={<NewOrder currentUser={currentUser} />} />
         <Route path="sales" element={<Sales/>}/>
         </Route>
         </Routes>
