@@ -27,7 +27,7 @@ export const OrderView = () => {
     const checkForAdditionalCharges = () => {
         getOrderWithOrderId(orderId).then(orderArr => {
             const orderObj = orderArr[0]
-            {orderObj.delivererId !== 0 ? 
+            {orderObj?.delivererId !== 0 ? 
                 (
                     addDelivery().then(() => {
                         checkForTip()
@@ -44,14 +44,14 @@ export const OrderView = () => {
     const checkForTip = () => {
         getOrderWithOrderId(orderId).then(orderArr => {
             const orderObj = orderArr[0]
-            setOrderTip(orderObj.tip)
+            setOrderTip(orderObj?.tip)
         })
     }
 
     const handleAddPizza = (e) => {
         e.preventDefault()
         const orderId = e.target.value
-        navigate(`/orders//addPizza/${orderId}`)
+        navigate(`/orders/addPizza/${orderId}`)
     }
 
     return (

@@ -15,8 +15,16 @@ export const getNextOrderId = async () => {
     return (currentOrders.length+1);
 }
 
+export const getNextPizzaId = async () => {
+    let currentPizzas = await fetch (`http://localhost:8088/pizzas`).then(res => res.json());
+    return (currentPizzas.length+1);
+}
+
 export const getToppingsByPizzaId = (pizzaId) => {
     return fetch(`http://localhost:8088/pizzaToppings?pizzaId=${pizzaId}&_expand=topping`).then(res => res.json())
+}
+export const getToppingsByPizzaIdWithoutExpansion = (pizzaId) => {
+    return fetch(`http://localhost:8088/pizzaToppings?pizzaId=${pizzaId}`).then(res => res.json())
 }
 
 export const getPizzaById = (pizzaId) => {
@@ -27,9 +35,9 @@ export const getOrderWithOrderId = (orderId) => {
     return fetch(`http://localhost:8088/orders?id=${orderId}`).then(res => res.json())
 }
 
- export const getAllPizzas = () => {
-    return fetch (`http://localhost:8088/pizzas?_expand=crust&_embed=pizzaToppings`).then(res => res.json())
-}
+//  export const getAllPizzas = () => {
+//     return fetch (`http://localhost:8088/pizzas?_expand=crust&_embed=pizzaToppings`).then(res => res.json())
+// }
 
 export const updateOrder = async (edittedOrder) => {
     return fetch(`http://localhost:8088/orders/${edittedOrder.id}`,
@@ -41,4 +49,48 @@ export const updateOrder = async (edittedOrder) => {
             body: JSON.stringify(edittedOrder)
         }
     )
+}
+
+export const insertOrder = async (order) => {
+    const response = await fetch("http://localhost:8088/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order),
+    });
+    return await response.json();
+  };
+
+  export const insertPizza = async (pizza) => {
+    const response = await fetch("http://localhost:8088/pizzas", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(pizza),
+    });
+    return await response.json();
+  };
+
+  export const insertPizzaTopping = async (pizzaTopping) => {
+    const response = await fetch("http://localhost:8088/pizzaToppings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(pizzaTopping),
+    });
+    return await response.json();
+  };
+
+export const getAllPizzas = () => {
+    return fetch (`http://localhost:8088/pizzas?_expand=crust&_embed=pizzaToppings`).then(res => res.json())
+}
+
+export const DeleteOrder = async (orderId) => {
+  const deleteOptions = {
+      method: "DELETE"
+  }
+  const response = await fetch(`http://localhost:8088/orders/${orderId}`, deleteOptions)
 }

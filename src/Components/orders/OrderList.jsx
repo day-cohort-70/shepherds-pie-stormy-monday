@@ -3,6 +3,7 @@ import { getOrderByDay } from "../../services/OrderService.jsx"
 import { OrdersFilter } from "./OrdersFilter.jsx"
 import { Link } from "react-router-dom"
 import { Deliverer } from "../employees/Deliverer.jsx"
+import { DeleteOrder } from "../../services/OrderService.jsx"
 import "./Orders.css"
 
 export const OrderList = ({ currentUser }) => {
@@ -30,6 +31,16 @@ export const OrderList = ({ currentUser }) => {
         getAndSetAllOrders(beginning, end)
     }, [filterDay, newDelivererId])
 
+    const OrderDeleted = async (orderId) =>{
+        DeleteOrder(orderId)
+    }
+
+    const updateOrders = async () => {
+        getOrderByDay(parseInt(filterDay), parseInt(filterEOD)).then(ordersArray => {
+            const reverseArray = ordersArray.map(order => order).reverse()
+            setFilteredOrders(reverseArray)
+    })
+}
 
     return (
         <div className="orders-container">
@@ -52,6 +63,17 @@ export const OrderList = ({ currentUser }) => {
                                     </div>
 
                                 ) : ("")}
+                                <div className="btn-container">
+                                        <button className="delete-btn"
+                                        value={orderObj.id}
+                                        onClick={async () =>{
+                                            await OrderDeleted(orderObj.id).then(()=>{
+                                            updateOrders()})
+                                        }}
+                                        >
+                                            <i className="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </div>
                             </footer>
                         </section>
 
