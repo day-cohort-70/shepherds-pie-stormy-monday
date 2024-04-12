@@ -23,9 +23,15 @@ export const getPizzasByOrderId = (orderId) => {
     return fetch(`http://localhost:8088/pizzas?id=${orderId}&_expand=crust&_expand=cheese&_expand=sauce&_embed=pizzaToppings`).then(res => res.json())
 }
 
+export const getPizzasByOrderId = (orderId) => {
+    return fetch(`http://localhost:8088/pizzas?orderId=${orderId}&_expand=crust&_expand=cheese&_expand=sauce&_embed=pizzaToppings`).then(res => res.json())
+}
 
 export const getToppingsByPizzaId = (pizzaId) => {
     return fetch(`http://localhost:8088/pizzaToppings?pizzaId=${pizzaId}&_expand=topping`).then(res => res.json())
+}
+export const getToppingsByPizzaIdWithoutExpansion = (pizzaId) => {
+    return fetch(`http://localhost:8088/pizzaToppings?pizzaId=${pizzaId}`).then(res => res.json())
 }
 
 export const getPizzaById = (pizzaId) => {
@@ -84,3 +90,7 @@ export const insertOrder = async (order) => {
     });
     return await response.json();
   };
+
+export const getAllPizzas = () => {
+    return fetch (`http://localhost:8088/pizzas?_expand=crust&_embed=pizzaToppings`).then(res => res.json())
+}
