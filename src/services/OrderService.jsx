@@ -92,4 +92,5 @@ export const DeleteOrder = async (orderId) => {
   const deleteOptions = {
       method: "DELETE"
   }
+  const response = await fetch(`http://localhost:8088/orders/${orderId}`, deleteOptions)
 }
