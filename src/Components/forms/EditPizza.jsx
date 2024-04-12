@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCrusts, getPizzaNotExpanded, getSauces, getToppings, getPizzaToppings, updatePizza, addToppings } from "../../services/pizzaService.js";
+import { getCrusts, getPizzaNotExpanded, getSauces, getToppings, getPizzaToppings, updatePizza, addToppings, DeleteToppings } from "../../services/pizzaService.js";
 import { getPizzaById, getToppingsByPizzaId, getToppingsByPizzaIdWithoutExpansion } from "../../services/OrderService.jsx";
 import { getCheeses } from "../../services/pizzaService.js";
 
@@ -17,8 +17,8 @@ export const EditPizza = () => {
     //all toppings that exist
     const [currentPizza, setCurrentPizza] = useState({})
     const [currentPizzaToppings, setCurrentPizzaToppings] = useState([])
-    const [addedToppings, setAddedToppings] = useState([])
-    const [deletedToppings, setDeletedToppings] = useState([])
+    // const [addedToppings, setAddedToppings] = useState([])
+    // const [deletedToppings, setDeletedToppings] = useState([])
     // const [allPizzaToppingsThatExist, setAllPizzaToppingsThatExist] = useState([])
 
     useEffect(() => {
@@ -64,7 +64,7 @@ export const EditPizza = () => {
         return currentPizzaToppings.some(toppingObj => toppingObj.toppingId === topping);
     };
 
-    //this is not currently editting the state
+
     const handleToppingChange = async (event) => {
         const toppingId = parseInt(event.target.value);
         const isChecked = event.target.checked;
@@ -74,13 +74,12 @@ export const EditPizza = () => {
         if (isChecked) {
             if (toppingIndex === -1) {
                 const newObj = {
-                    id: Date.now(),
+                    // id: Date.now(),
                     pizzaId: parseInt(pizzaId),
                     toppingId: toppingId
                 }
                 setCurrentPizzaToppings([...currentPizzaToppings, newObj])
-                // setAddedToppings(newObj)
-            } 
+            }
             //delete works
         } else {
             if (toppingIndex !== -1) {
@@ -94,22 +93,34 @@ export const EditPizza = () => {
                 // console.log(copy)
                 // copy.push(newObj)
                 // console.log(copy)
-        }}}
-
-        const handleSave = async(e) => {
-            e.preventDefault()
-            updatePizza(edittedPizza)
-            {addedToppings.map((toppingObj)=>{
-            addToppings(toppingObj)
-
-            //TODO
-            //if they exist in currentPizzaToppings, but not currentPizza.pizzaToppings then add with POST - done a different way
-            // if they exist in currentPizza.pizzaToppings but not currentPizzaToppings then DELETE
-            //to do above, you can use findIndex to see if it exists in currentPizzaToppings, while mapping through currentPizza.pizzaToppings
-            //if index = -1 then delete
-        })}
+            }
         }
+    }
 
+    const handleSave = async (e) => {
+        e.preventDefault()
+        await updatePizza(edittedPizza)
+        await CheckToppings()
+    }
+
+    const CheckToppings = async () => {
+        {
+            currentPizzaToppings.map((topping) => {
+                toppingIndex = currentPizza.pizzaToppings.findIndex(toppingObj => toppingObj.toppingId === topping.toppingId)
+                if (toppingIndex === -1) {
+                    addToppings(topping)
+                }
+            })
+        }
+        {
+            currentPizza.pizzaToppings.map((toppingObj) => {
+                toppingIndex = currentPizzaToppings.findIndex(topping => topping.toppingId === toppingObj.toppingId)
+                if (toppingIndex === -1) {
+                    DeleteToppings(toppingObj)
+                }
+            })
+        }
+    }
 
     return (
         <form className="edit-pizza">
@@ -188,7 +199,7 @@ export const EditPizza = () => {
                 </div>
             </fieldset>
             <button className="btn-primary"
-            onClick={handleSave}
+                onClick={handleSave}
             >Save</button>
         </form>
     );

@@ -31,12 +31,22 @@ export const updatePizza = async (edittedPizza) => {
 export const addToppings= async (topping) => {
     return fetch(`http://localhost:8088/pizzaToppings`,
         {
-            method: "PUT",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(topping)
+            body: JSON.stringify({
+                "pizzaId": topping.pizzaId,
+                "toppingId": topping.toppingId
+            })
         }
     )
+}
+
+export const DeleteToppings = async (topping) => {
+    const deleteOptions = {
+        method: "DELETE"
+    }
+    const response = await fetch(`http://localhost:8088/pizzaToppings/${topping.id}`, deleteOptions)
 }
 
