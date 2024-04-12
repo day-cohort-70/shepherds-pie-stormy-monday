@@ -73,6 +73,14 @@
       "tip": 0,
       "destination": "7",
       "delivererId": 0
+    },
+    {
+      "id": 6,
+      "employeeId": 3,
+      "timestamp": 1705488554000,
+      "tip": 0,
+      "destination": "5",
+      "delivererId": 0
     }
   ],
   "pizzas": [
@@ -133,25 +141,11 @@
       "sauceId": 1
     },
     {
-      "orderId": null,
-      "crustId": 2,
-      "sauceId": 1,
-      "cheeseId": 2,
-      "id": 9
-    },
-    {
-      "orderId": 3,
-      "crustId": 2,
-      "sauceId": 1,
-      "cheeseId": 2,
-      "id": 10
-    },
-    {
-      "orderId": 3,
-      "crustId": 2,
-      "sauceId": 2,
-      "cheeseId": 2,
-      "id": 11
+      "id": 9,
+      "orderId": 6,
+      "crustId": 1,
+      "cheeseId": 3,
+      "sauceId": 2
     }
   ],
   "pizzaToppings": [
