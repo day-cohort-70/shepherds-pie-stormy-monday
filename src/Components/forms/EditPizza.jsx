@@ -14,12 +14,8 @@ export const EditPizza = () => {
     const [sauces, setSauces] = useState([]);
     const [cheeses, setCheeses] = useState([]);
     const [toppings, setToppings] = useState([])
-    //all toppings that exist
     const [currentPizza, setCurrentPizza] = useState({})
     const [currentPizzaToppings, setCurrentPizzaToppings] = useState([])
-    // const [addedToppings, setAddedToppings] = useState([])
-    // const [deletedToppings, setDeletedToppings] = useState([])
-    // const [allPizzaToppingsThatExist, setAllPizzaToppingsThatExist] = useState([])
 
     useEffect(() => {
         getCrusts().then((crustArr) => {
@@ -34,9 +30,6 @@ export const EditPizza = () => {
         getToppings().then((toppingArr) => {
             setToppings(toppingArr);
         });
-        // getPizzaToppings().then((toppingArr)=>{
-        //     setAllPizzaToppingsThatExist(toppingArr)
-        // })
     }, []);
 
     useEffect(() => {
@@ -54,12 +47,6 @@ export const EditPizza = () => {
         });
     }, [currentPizza])
 
-    // useEffect(() => {
-    //     getPizzaToppings().then((pizzaToppingArr) => {
-    //         setPizzaToppings(pizzaToppingArr);
-    //     });
-    // }, [currentPizza]);
-
     const checkFunction = (topping) => {
         return currentPizzaToppings.some(toppingObj => toppingObj.toppingId === topping);
     };
@@ -74,25 +61,14 @@ export const EditPizza = () => {
         if (isChecked) {
             if (toppingIndex === -1) {
                 const newObj = {
-                    // id: Date.now(),
                     pizzaId: parseInt(pizzaId),
                     toppingId: toppingId
                 }
                 setCurrentPizzaToppings([...currentPizzaToppings, newObj])
             }
-            //delete works
         } else {
             if (toppingIndex !== -1) {
                 setCurrentPizzaToppings(currentPizzaToppings.filter(toppingObj => toppingObj.toppingId !== toppingId))
-                // const newObj = {
-                //     id: toppingIndex + 1,
-                //     pizzaId: parseInt(pizzaId),
-                //     toppingId: toppingId
-                // }
-                // const copy = [...deletedToppings]
-                // console.log(copy)
-                // copy.push(newObj)
-                // console.log(copy)
             }
         }
     }
