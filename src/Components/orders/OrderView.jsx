@@ -27,7 +27,7 @@ export const OrderView = () => {
     const checkForAdditionalCharges = () => {
         getOrderWithOrderId(orderId).then(orderArr => {
             const orderObj = orderArr[0]
-            {orderObj.delivererId !== 0 ? 
+            {orderObj?.delivererId !== 0 ? 
                 (
                     addDelivery().then(() => {
                         checkForTip()
@@ -44,7 +44,7 @@ export const OrderView = () => {
     const checkForTip = () => {
         getOrderWithOrderId(orderId).then(orderArr => {
             const orderObj = orderArr[0]
-            setOrderTip(orderObj.tip)
+            setOrderTip(orderObj?.tip)
         })
     }
 

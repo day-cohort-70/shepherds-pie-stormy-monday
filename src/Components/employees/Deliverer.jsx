@@ -48,10 +48,10 @@ export const Deliverer = ({ delivererId, order, setNewDelivererId }) => {
                     <select name="employees"
                         onChange={handleChange}
                     >
-                        <option value="" selected disabled hidden>Choose a Deliverer</option>
+                        <option defaultValue="" hidden ></option>
                         {employees.map(employee => {
                             return (
-                                <option value={employee.id}>{employee.name}</option>
+                                <option value={employee.id} key={employee.id}>{employee.name}</option>
                             )
                         })}
                     </select>

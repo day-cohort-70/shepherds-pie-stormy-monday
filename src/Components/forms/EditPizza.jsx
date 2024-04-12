@@ -1,83 +1,105 @@
-import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { getCrusts, getPizzaNotExpanded, getSauces, getToppings } from "../../services/pizzaService.js"
-import { getPizzaById } from "../../services/OrderService.jsx"
-import { getCheeses } from "../../services/pizzaService.js"
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getCrusts, getPizzaNotExpanded, getSauces, getToppings, getPizzaToppings, updatePizza, addToppings, DeleteToppings } from "../../services/pizzaService.js";
+import { getPizzaById, getToppingsByPizzaId, getToppingsByPizzaIdWithoutExpansion } from "../../services/OrderService.jsx";
+import { getCheeses } from "../../services/pizzaService.js";
+
 
 
 export const EditPizza = () => {
-    const [edittedPizza, setEdittedPizza] = useState({})
-    const { pizzaId } = useParams()
-    const navigate = useNavigate()
-    const [crusts, setCrusts] = useState([])
-    const [sauces, setSauces] = useState([])
-    const [cheeses, setCheeses] = useState([])
+    const [edittedPizza, setEdittedPizza] = useState({});
+    const { pizzaId } = useParams();
+    const navigate = useNavigate();
+    const [crusts, setCrusts] = useState([]);
+    const [sauces, setSauces] = useState([]);
+    const [cheeses, setCheeses] = useState([]);
     const [toppings, setToppings] = useState([])
     const [currentPizza, setCurrentPizza] = useState({})
+    const [currentPizzaToppings, setCurrentPizzaToppings] = useState([])
 
     useEffect(() => {
         getCrusts().then((crustArr) => {
-            setCrusts(crustArr)
-        })
+            setCrusts(crustArr);
+        });
         getSauces().then((sauceArr) => {
-            setSauces(sauceArr)
-        })
+            setSauces(sauceArr);
+        });
         getCheeses().then((cheeseArr) => {
-            setCheeses(cheeseArr)
-        })
+            setCheeses(cheeseArr);
+        });
         getToppings().then((toppingArr) => {
-            setToppings(toppingArr)
-        })
-    }, [])
+            setToppings(toppingArr);
+        });
+    }, []);
 
     useEffect(() => {
         getPizzaById(pizzaId).then((pizzaArr) => {
-            const pizzaObj = pizzaArr[0]
-            setCurrentPizza(pizzaObj)
-        })
-    }, [pizzaId])
+            const pizzaObj = pizzaArr[0];
+            setCurrentPizza(pizzaObj);
+            setCurrentPizzaToppings(pizzaObj.pizzaToppings)
+        });
+    }, [pizzaId]);
 
-    //I think this needs its own fetch call to set the editted pizza without the expansions 
-    useEffect(()=>{
-       getPizzaNotExpanded(pizzaId).then((pizzaArr)=>{
-       const pizzaObj = pizzaArr[0]
-        setEdittedPizza(pizzaObj)
-       })
+    useEffect(() => {
+        getPizzaNotExpanded(pizzaId).then((pizzaArr) => {
+            const pizzaObj = pizzaArr[0];
+            setEdittedPizza(pizzaObj);
+        });
     }, [currentPizza])
 
     const checkFunction = (topping) => {
-        return currentPizza?.pizzaToppings?.some(toppingObj => toppingObj.toppingId === topping)
-    }
+        return currentPizzaToppings.some(toppingObj => toppingObj.toppingId === topping);
+    };
 
-    //this is not currently editting the state
-    const handleToppingChange = (event) => {
-        debugger
+
+    const handleToppingChange = async (event) => {
         const toppingId = parseInt(event.target.value);
-        const isChecked = event.target.checked; 
+        const isChecked = event.target.checked;
         //does it exist already in the pizza?
-        const toppingIndex = edittedPizza?.pizzaToppings?.findIndex(toppingObj => toppingObj.toppingId === toppingId);
+        const toppingIndex = currentPizza.pizzaToppings.findIndex(toppingObj => toppingObj.toppingId === toppingId);
 
         if (isChecked) {
             if (toppingIndex === -1) {
-                setEdittedPizza(edittedPizza => ({
-                    ...edittedPizza,
-                    //add a topping by adding an object to pizzaToppings with new id, pizzaId & toppingId... I dont think this does that
-                    //how to add a new object to an existing array
-                    pizzaToppings: [...edittedPizza?.pizzaToppings, pizzaToppings]
-                }));
+                const newObj = {
+                    pizzaId: parseInt(pizzaId),
+                    toppingId: toppingId
+                }
+                setCurrentPizzaToppings([...currentPizzaToppings, newObj])
             }
         } else {
             if (toppingIndex !== -1) {
-                setEdittedPizza(edittedPizza => ({
-                    ...edittedPizza,
-                    pizzaToppings: edittedPizza?.pizzaToppings.filter(topping => topping.id !== toppingId)
-                }));
+                setCurrentPizzaToppings(currentPizzaToppings.filter(toppingObj => toppingObj.toppingId !== toppingId))
             }
         }
-
-
     }
 
+    const handleSave = async (e) => {
+        e.preventDefault()
+        await updatePizza(edittedPizza)
+        await CheckToppings()
+        navigate(`/orders/${orderId}`)
+    }
+
+    const CheckToppings = async () => {
+        console.log("toppings saving")
+        {
+            currentPizzaToppings.map((topping) => {
+                const toppingIndex = currentPizza.pizzaToppings?.findIndex(toppingObj => toppingObj.toppingId === topping.toppingId)
+                if (toppingIndex === -1) {
+                    addToppings(topping)
+                    console.log("topping added")
+                }
+            })
+        }
+        {
+            currentPizza.pizzaToppings.map((toppingObj) => {
+                const toppingIndex = currentPizzaToppings?.findIndex(topping => topping.toppingId === toppingObj.toppingId)
+                if (toppingIndex === -1) {
+                    DeleteToppings(toppingObj)
+                }
+            })
+        }
+    }
 
     return (
         <form className="edit-pizza">
@@ -88,7 +110,7 @@ export const EditPizza = () => {
                     <select name="crust"
                         onChange={(event) => {
                             const copy = { ...edittedPizza }
-                            copy.crustId = event.target.value
+                            copy.crustId = parseInt(event.target.value)
                             setEdittedPizza(copy)
                         }}
                     >
@@ -107,8 +129,7 @@ export const EditPizza = () => {
                     <select name="sauce"
                         onChange={(event) => {
                             const copy = { ...edittedPizza }
-                            copy.sauceId = event.target.value
-                            setEdittedPizza(copy)
+                            copy.sauceId = parseInt(event.target.value)
                         }}
                     >
                         <option defaultValue={currentPizza?.sauce?.desc} hidden> {currentPizza?.sauce?.desc} </option>
@@ -126,7 +147,7 @@ export const EditPizza = () => {
                     <select name="cheese"
                         onChange={(event) => {
                             const copy = { ...edittedPizza }
-                            copy.cheeseId = event.target.value
+                            copy.cheeseId = parseInt(event.target.value)
                             setEdittedPizza(copy)
                         }}
                     >
@@ -148,7 +169,7 @@ export const EditPizza = () => {
                                 type="checkbox"
                                 value={topping.id}
                                 id={`topping-${topping.id}`}
-                                defaultChecked={checkFunction(topping.id)}
+                                checked={checkFunction(topping.id)}
                                 onChange={handleToppingChange}
                             />
                             <label htmlFor={`topping-${topping.id}`}>{topping.desc}</label>
@@ -156,7 +177,11 @@ export const EditPizza = () => {
                     ))}
                 </div>
             </fieldset>
-<button className="btn-primary">Save</button>
+            <button className="btn-primary"
+                onClick={handleSave}
+            >Save</button>
         </form>
-    )
-}
+    );
+};
+
+
