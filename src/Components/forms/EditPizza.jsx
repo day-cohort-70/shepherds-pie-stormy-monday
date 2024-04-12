@@ -104,17 +104,19 @@ export const EditPizza = () => {
     }
 
     const CheckToppings = async () => {
+        console.log("toppings saving")
         {
             currentPizzaToppings.map((topping) => {
-                toppingIndex = currentPizza.pizzaToppings.findIndex(toppingObj => toppingObj.toppingId === topping.toppingId)
+                const toppingIndex = currentPizza.pizzaToppings?.findIndex(toppingObj => toppingObj.toppingId === topping.toppingId)
                 if (toppingIndex === -1) {
                     addToppings(topping)
+                    console.log("topping added")
                 }
             })
         }
         {
             currentPizza.pizzaToppings.map((toppingObj) => {
-                toppingIndex = currentPizzaToppings.findIndex(topping => topping.toppingId === toppingObj.toppingId)
+                const toppingIndex = currentPizzaToppings?.findIndex(topping => topping.toppingId === toppingObj.toppingId)
                 if (toppingIndex === -1) {
                     DeleteToppings(toppingObj)
                 }

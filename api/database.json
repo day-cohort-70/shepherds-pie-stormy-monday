@@ -94,7 +94,7 @@
       "id": 3,
       "orderId": 2,
       "crustId": 2,
-      "cheeseId": 4,
+      "cheeseId": 3,
       "sauceId": 4
     },
     {
@@ -193,6 +193,11 @@
       "id": 8,
       "pizzaId": 2,
       "toppingId": 1
+    },
+    {
+      "pizzaId": 3,
+      "toppingId": 3,
+      "id": 10
     }
   ],
   "toppings": [
