@@ -7,7 +7,8 @@ import { EmployeeDetails } from "../components/employees/EmployeeDetails.jsx"
 import { NewOrder } from "../components/forms/NewOrder.jsx"
 import { OrderView } from "../components/orders/OrderView.jsx"
 import { Sales } from "../components/sales/Sales.jsx"
-import { EditPizza } from "../components/forms/EditPizza.jsx"import { AddPizza } from "../components/forms/AddPizza.jsx"
+import { EditPizza } from "../components/forms/EditPizza.jsx"
+import { AddPizza } from "../components/forms/AddPizza.jsx"
 
 
 export const AdminViews = ({currentUser}) => {
