@@ -51,7 +51,7 @@ export const OrderView = () => {
     const handleAddPizza = (e) => {
         e.preventDefault()
         const orderId = e.target.value
-        navigate(`/orders//addPizza/${orderId}`)
+        navigate(`/orders/addPizza/${orderId}`)
     }
 
     return (

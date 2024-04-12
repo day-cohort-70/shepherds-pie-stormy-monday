@@ -77,6 +77,7 @@ export const EditPizza = () => {
         e.preventDefault()
         await updatePizza(edittedPizza)
         await CheckToppings()
+        navigate(`/orders/${orderId}`)
     }
 
     const CheckToppings = async () => {
