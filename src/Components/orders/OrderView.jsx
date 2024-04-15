@@ -12,7 +12,7 @@ export const OrderView = () => {
     const [deliveryPrice, setDeliveryPrice] = useState(0)
     const navigate = useNavigate()
 
-    const getAndSetPizzas = () =>{
+    const getAndSetPizzas = () => {
         getPizzasByOrderId(orderId).then(pizzaArray => {
             setCurrentOrder(pizzaArray)
         })
@@ -20,7 +20,7 @@ export const OrderView = () => {
 
     //initital render only
     useEffect(() => {
-     getAndSetPizzas()
+        getAndSetPizzas()
     }, [])
 
     //runs only once when orderId changes
@@ -32,7 +32,8 @@ export const OrderView = () => {
     const checkForAdditionalCharges = () => {
         getOrderWithOrderId(orderId).then(orderArr => {
             const orderObj = orderArr[0]
-            {orderObj?.delivererId !== 0 ? 
+            {
+                orderObj?.delivererId !== 0 ?
                 (
                     addDelivery().then(() => {
                         checkForTip()
@@ -62,24 +63,26 @@ export const OrderView = () => {
     return (
         <>
             <div className="btn-container">
-                <button className="btn-primary" value= {orderId}
+                <button className="btn-primary" value={orderId}
                     onClick={handleAddPizza}
                 >Add Pizza</button>
             </div>
-            <div>
-                                <span>Tip: $</span>
-                                {orderTip}
-                            </div>
-                            <div>
-                                <span>Total Price: $</span>
-                                {orderPrice + orderTip + deliveryPrice}
-                            </div>
+            <div className="order-details">
+                <div>
+                    <span>Tip: $</span>
+                    {orderTip}
+                </div>
+                <div>
+                    <span>Total Price: $</span>
+                    {orderPrice + orderTip + deliveryPrice}
+                </div>
+            </div>
             <div className="orders-container">
                 {currentOrder.map(pizza => {
                     return (
                         <>
-                            <Pizza getAndSetPizzas = {getAndSetPizzas} pizza={pizza} pizzaId={pizza.id} orderPrice={orderPrice} setOrderPrice={setOrderPrice} orderId ={orderId}/>
-                            
+                            <Pizza getAndSetPizzas={getAndSetPizzas} pizza={pizza} pizzaId={pizza.id} orderPrice={orderPrice} setOrderPrice={setOrderPrice} orderId={orderId} />
+
                         </>
 
                     )
