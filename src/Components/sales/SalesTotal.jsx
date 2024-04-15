@@ -12,6 +12,6 @@ export const SalesTotal = ({totalSales}) => {
     }, [totalSales])
 
     return <div>
-        {salesMessage}
+        <b>{salesMessage}</b>
     </div>
 }

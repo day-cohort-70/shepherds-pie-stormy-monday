@@ -55,7 +55,7 @@ export const Deliverer = ({ delivererId, order, setNewDelivererId }) => {
                             )
                         })}
                     </select>
-                    <button className="btn-secondary"
+                    <button className="btn-secondary save-btn"
                         onClick={assignDeliverer}
                     >Save</button>
                 </div>

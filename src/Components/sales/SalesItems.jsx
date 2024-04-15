@@ -6,7 +6,6 @@ export const SalesItems = ({mostPopCrust, mostPopSauce, mostPopCheese, mostPopTo
     const [sauceName, setSauceName] = useState("")
     const [cheeseName, setCheeseName] = useState("")
     const [toppingNamesList, setToppingNamesList] = useState("")
-    const [ingredientMessage, setIngredientMessage] = useState("")
 
     const getAllIngredients = () => {
         getCrusts().then((crustArray) => {

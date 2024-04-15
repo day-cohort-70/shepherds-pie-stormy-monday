@@ -3,6 +3,7 @@ import { getNextOrderId, getNextPizzaId, insertOrder, insertPizza, insertPizzaTo
 import { getCheeses, getToppings, getCrusts, getSauces } from "../../services/ingredientService.js";
 import { OrderOptions } from './OrderOptions.jsx'; 
 import { getEmployees } from '../../services/employeeService.js';
+import "./Create.css"
 
 export const NewOrder = ({currentUser}) => {
     const [ingredients, setIngredients] = useState({
