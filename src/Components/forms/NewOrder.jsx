@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getNextOrderId } from "../../services/OrderService.jsx";
+import { getNextOrderId, getNextPizzaId, insertOrder, insertPizza, insertPizzaTopping } from "../../services/OrderService.jsx";
 import { getCheeses, getToppings, getCrusts, getSauces } from "../../services/ingredientService.js";
 import { OrderOptions } from './OrderOptions.jsx'; 
 import { getEmployees } from '../../services/employeeService.js';
 import "./Create.css"
 
-export const NewOrder = () => {
+export const NewOrder = ({currentUser}) => {
     const [ingredients, setIngredients] = useState({
         toppings: [],
         crusts: [],
@@ -14,7 +14,7 @@ export const NewOrder = () => {
     });
     const [order, setOrder] = useState([]);
     const [orderId, setOrderId] = useState(null);
-    const [pizzas, setPizzas] = useState([]); // State to hold the list of pizzas added to the order
+
     // State to hold the current pizza selection temporarily
     const [transientPizza, setTransientPizza] = useState({
         toppings: [],
