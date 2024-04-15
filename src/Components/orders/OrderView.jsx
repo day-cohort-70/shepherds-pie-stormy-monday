@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { getOrderWithOrderId, getPizzasByOrderId } from "../../services/OrderService.jsx"
 import { Pizza } from "./Pizza.jsx"
+import "./Orders.css"
 
 export const OrderView = () => {
     const { orderId } = useParams()
@@ -11,11 +12,15 @@ export const OrderView = () => {
     const [deliveryPrice, setDeliveryPrice] = useState(0)
     const navigate = useNavigate()
 
-    //initital render only
-    useEffect(() => {
+    const getAndSetPizzas = () =>{
         getPizzasByOrderId(orderId).then(pizzaArray => {
             setCurrentOrder(pizzaArray)
         })
+    }
+
+    //initital render only
+    useEffect(() => {
+     getAndSetPizzas()
     }, [])
 
     //runs only once when orderId changes
@@ -61,12 +66,7 @@ export const OrderView = () => {
                     onClick={handleAddPizza}
                 >Add Pizza</button>
             </div>
-            <div className="orders-conatiner">
-                {currentOrder.map(pizza => {
-                    return (
-                        <>
-                            <Pizza pizza={pizza} pizzaId={pizza.id} orderPrice={orderPrice} setOrderPrice={setOrderPrice} />
-                            <div>
+            <div>
                                 <span>Tip: $</span>
                                 {orderTip}
                             </div>
@@ -74,6 +74,12 @@ export const OrderView = () => {
                                 <span>Total Price: $</span>
                                 {orderPrice + orderTip + deliveryPrice}
                             </div>
+            <div className="orders-container">
+                {currentOrder.map(pizza => {
+                    return (
+                        <>
+                            <Pizza getAndSetPizzas = {getAndSetPizzas} pizza={pizza} pizzaId={pizza.id} orderPrice={orderPrice} setOrderPrice={setOrderPrice} orderId ={orderId}/>
+                            
                         </>
 
                     )

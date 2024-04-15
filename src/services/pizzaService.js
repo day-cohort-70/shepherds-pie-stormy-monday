@@ -49,6 +49,12 @@ export const DeleteToppings = async (topping) => {
     }
     const response = await fetch(`http://localhost:8088/pizzaToppings/${topping.id}`, deleteOptions)
 }
+export const DeletePizza = async (pizzaId) => {
+    const deleteOptions = {
+        method: "DELETE"
+    }
+    const response = await fetch(`http://localhost:8088/pizzas/${pizzaId}`, deleteOptions)
+}
 
 export const addPizza= async (pizza) => {
     return fetch(`http://localhost:8088/pizzas`,
