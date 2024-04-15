@@ -8,6 +8,8 @@ import { NewOrder } from "../components/forms/NewOrder.jsx"
 import { OrderView } from "../components/orders/OrderView.jsx"
 import { Sales } from "../components/sales/Sales.jsx"
 import { EditPizza } from "../components/forms/EditPizza.jsx"
+import { AddPizza } from "../components/forms/AddPizza.jsx"
+
 
 export const AdminViews = ({currentUser}) => {
     return (
@@ -27,6 +29,7 @@ export const AdminViews = ({currentUser}) => {
         <Route path="orders/:orderId" element={<OrderView />}/>
         <Route path="orders/edit/:pizzaId" element={<EditPizza/>}/>
         <Route path="orders/create" element={<NewOrder currentUser={currentUser} />} />
+        <Route path="orders/addPizza/:orderId" element={<AddPizza />}/>
         <Route path="sales" element={<Sales/>}/>
         </Route>
         </Routes>

@@ -1,6 +1,6 @@
 export const OrderOptions = ({ ingredients, transientPizza, handleToppingChange, handleCrustChange, handleCheeseChange, handleSauceChange }) => {
     return (
-        <div>
+        <div className="order-options">
             <div>
                 <h3>Toppings</h3>
                 {ingredients.toppings.map(topping => (

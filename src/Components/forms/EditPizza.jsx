@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCrusts, getPizzaNotExpanded, getSauces, getToppings, getPizzaToppings, updatePizza, addToppings, DeleteToppings } from "../../services/pizzaService.js";
-import { getPizzaById, getToppingsByPizzaId, getToppingsByPizzaIdWithoutExpansion } from "../../services/OrderService.jsx";
+import { getCrusts, getPizzaNotExpanded, getSauces, getToppings, updatePizza, addToppings, DeleteToppings } from "../../services/pizzaService.js";
+import { getPizzaById } from "../../services/OrderService.jsx";
 import { getCheeses } from "../../services/pizzaService.js";
 
 
@@ -36,9 +36,16 @@ export const EditPizza = () => {
         getPizzaById(pizzaId).then((pizzaArr) => {
             const pizzaObj = pizzaArr[0];
             setCurrentPizza(pizzaObj);
-            setCurrentPizzaToppings(pizzaObj.pizzaToppings)
+
         });
-    }, [pizzaId]);
+    }, [currentPizzaToppings]);
+
+    useEffect(() => {
+        getPizzaById(pizzaId).then((pizzaArr) => {
+            const pizzaObj = pizzaArr[0];
+            setCurrentPizzaToppings(pizzaObj.pizzaToppings)
+        })
+    }, [pizzaId])
 
     useEffect(() => {
         getPizzaNotExpanded(pizzaId).then((pizzaArr) => {
@@ -55,22 +62,18 @@ export const EditPizza = () => {
     const handleToppingChange = async (event) => {
         const toppingId = parseInt(event.target.value);
         const isChecked = event.target.checked;
-        //does it exist already in the pizza?
-        const toppingIndex = currentPizza.pizzaToppings.findIndex(toppingObj => toppingObj.toppingId === toppingId);
+        let updatedToppings = [...currentPizzaToppings]
 
         if (isChecked) {
-            if (toppingIndex === -1) {
-                const newObj = {
+            if (!updatedToppings.some(toppingObj => toppingObj.toppingId === toppingId))
+                updatedToppings.push({
                     pizzaId: parseInt(pizzaId),
                     toppingId: toppingId
-                }
-                setCurrentPizzaToppings([...currentPizzaToppings, newObj])
-            }
+                })
         } else {
-            if (toppingIndex !== -1) {
-                setCurrentPizzaToppings(currentPizzaToppings.filter(toppingObj => toppingObj.toppingId !== toppingId))
-            }
+            updatedToppings = updatedToppings.filter(toppingObj => toppingObj.toppingId !== toppingId)
         }
+        setCurrentPizzaToppings(updatedToppings)
     }
 
     const handleSave = async (e) => {

@@ -1,0 +1,18 @@
+.sales-container {
+    margin: 1rem 5rem 0rem 5rem;
+}
+.sales-heading {
+    display: flex;
+    justify-content: space-between;
+}
+.sales-results {
+    background-color: var(--white);
+    border: 1px solid var(--primary);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+h4 {
+    margin: 0.5em;
+    margin-left: 0;
+}

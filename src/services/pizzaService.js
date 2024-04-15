@@ -50,3 +50,34 @@ export const DeleteToppings = async (topping) => {
     const response = await fetch(`http://localhost:8088/pizzaToppings/${topping.id}`, deleteOptions)
 }
 
+export const addPizza= async (pizza) => {
+    return fetch(`http://localhost:8088/pizzas`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              "orderId": pizza.orderId,
+              "crustId": pizza.crust,
+             "sauceId": pizza.sauce,
+             "cheeseId": pizza.cheese
+            })
+        }
+    )
+}
+
+export const addToppingsForAddPizza= async (toppingObj) => {
+    return fetch(`http://localhost:8088/pizzaToppings`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                toppingObj
+            })
+        }
+    )
+}
+
