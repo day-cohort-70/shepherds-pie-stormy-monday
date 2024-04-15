@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getNextOrderId, insertOrder } from "../../services/OrderService.jsx";
+import { getNextOrderId, getNextPizzaId, insertOrder, insertPizza, insertPizzaTopping } from "../../services/OrderService.jsx";
 import { getCheeses, getToppings, getCrusts, getSauces } from "../../services/ingredientService.js";
 import { OrderOptions } from './OrderOptions.jsx'; 
 import { getEmployees } from '../../services/employeeService.js';
 import "./Create.css"
 
-export const NewOrder = () => {
+export const NewOrder = ({currentUser}) => {
     const [ingredients, setIngredients] = useState({
         toppings: [],
         crusts: [],
@@ -14,13 +14,14 @@ export const NewOrder = () => {
     });
     const [order, setOrder] = useState([]);
     const [orderId, setOrderId] = useState(null);
-    // const [pizzas, setPizzas] = useState([]); // State to hold the list of pizzas added to the order
+
+    // State to hold the current pizza selection temporarily
     const [transientPizza, setTransientPizza] = useState({
         toppings: [],
         crust: 0,
         cheese: 0,
         sauce: 0
-    }); // State to hold the current pizza selection temporarily
+    }); 
     const [deliveryDestination, setDeliveryDestination] = useState(''); // State for delivery destination
 
     useEffect(() => {
@@ -43,14 +44,13 @@ export const NewOrder = () => {
         });
     }, []);
 
-    useEffect(() => {
-        console.log(transientPizza);
-    }, [transientPizza]);
+useEffect(() => {
+    console.log(transientPizza)
+}, [transientPizza])
 
-    useEffect(() => {
-        console.log(order);
-    }, [order]);
-    
+useEffect(() => {
+    console.log(order)
+}, [order])
 
     const handleToppingChange = (event) => {
         const toppingId = parseInt(event.target.value);
@@ -129,31 +129,34 @@ export const NewOrder = () => {
         if (deliveryDestination.trim() === '') {
             window.alert("Please select a delivery destination.");
         } else {
-            // add the delivery destination to the order
+            // check that required selections are made, add the delivery destination to the order
             if (transientPizza.cheese !== 0 && transientPizza.crust !== 0 && transientPizza.sauce !== 0) {
                 setOrder(prevPizzas => [...prevPizzas, transientPizza]);
             }
-            // const newOrder = {
-            //     ...order,
-            //     deliveryDestination
-            // };
-            //setOrder(newOrder);
             addOrderToDatabase(order)
 
         }
     };
 
-
+// Calculate the total price of the order
+const calculateTotalPrice = (orderPizzas) => {
+    let total = 0;
+    orderPizzas.forEach(pizza => {
+        // Find the crust object that matches the pizza's crustId
+        const crust = ingredients.crusts.find(crust => crust.id === pizza.crust);
+        // If a matching crust is found, add its price to the total
+        if (crust) {
+            total += crust.price;
+        }
+        // Add the price of each topping to the total
+        total += pizza.toppings.reduce((acc, topping) => acc + topping.price, 0);
+    });
+    return total;
+};
 
 const addOrderToDatabase = async (order) => {
-    // Calculate the total price of the order
-    const calculateTotalPrice = (orderPizzas) => {
-        let total = 12;
-        orderPizzas.forEach(pizza => {
-            total += pizza.toppings.reduce((acc, topping) => acc + topping.price, 0);
-        });
-        return total;
-    };
+    
+    
 
     // Assign a random employee as the deliverer if the destination is not a table number
     const assignDeliverer = async (destination) => {
@@ -168,25 +171,25 @@ const addOrderToDatabase = async (order) => {
     // Insert the order into the database
     const insertOrderIntoDatabase = async (order) => {
         const totalPrice = calculateTotalPrice(order);
+        console.log(totalPrice)
         const delivererId = await assignDeliverer(deliveryDestination);
         var nextPizzaId = await getNextPizzaId()
+        const orderTip = (Math.floor(totalPrice * 0.2 * 100) / 100)
         // Insert the order
 
-        //TODO use currentUser for employeeId
         let completedOrder = await insertOrder({
             employeeId: currentUser.id,
             timestamp: Date.now(),
-            tip: 0, // Assuming no tip is added at this point
+            tip: orderTip, // 20% standard tip policy
             destination: deliveryDestination,
             delivererId: delivererId,
-            totalPrice: totalPrice
+            // totalPrice: totalPrice - not a column
         });
 
         // Insert each pizza in the order
 
-        //TO DO increment pizzaId
         for (const pizza of order) {
-            debugger
+            
             let orderedPizza = await insertPizza({
                 orderId: orderId,
                 crustId: pizza.crust,
@@ -205,12 +208,13 @@ const addOrderToDatabase = async (order) => {
         }
     };
 
-    // Call the insertOrderIntoDatabase function
+    // Call the insertOrderIntoDatabase function to place order
     try {
         await insertOrderIntoDatabase(order);
         window.alert("Order placed.");
     } catch (error) {
         window.alert("Error placing order.", error);
+        console.log(error)
     }
 };
 
@@ -247,6 +251,7 @@ const addOrderToDatabase = async (order) => {
                 </div>
             </div>
             <div className="order-status">
+                <h2>Total Price: ${calculateTotalPrice(order)}</h2>
             {order.map((pizza, index) => (
                 <div key={index} className="pizza-details">
                     <h3>Pizza {index + 1}</h3>
