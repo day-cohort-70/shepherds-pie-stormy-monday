@@ -210,19 +210,30 @@
       "toppingId": 1
     },
     {
-      "id": 9,
-      "pizzaId": 9,
-      "toppingId": 7
+      "pizzaId": 3,
+      "toppingId": 3,
+      "id": 10
     },
     {
-      "id": 9,
-      "pizzaId": 9,
-      "toppingId": 6
+      "toppingObj": {
+        "pizzaId": 11,
+        "toppingId": 4
+      },
+      "id": 11
     },
     {
-      "id": 9,
-      "pizzaId": 9,
-      "toppingId": 5
+      "toppingObj": {
+        "pizzaId": 9,
+        "toppingId": 7
+      },
+      "id": 12
+    },
+    {
+      "toppingObj": {
+        "pizzaId": 11,
+        "toppingId": 4
+      },
+      "id": 13
     }
   ],
   "toppings": [
