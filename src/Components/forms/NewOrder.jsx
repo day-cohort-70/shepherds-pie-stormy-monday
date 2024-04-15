@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getNextOrderId } from "../../services/OrderService.jsx";
+import { getNextOrderId, insertOrder } from "../../services/OrderService.jsx";
 import { getCheeses, getToppings, getCrusts, getSauces } from "../../services/ingredientService.js";
 import { OrderOptions } from './OrderOptions.jsx'; 
 
@@ -12,7 +12,7 @@ export const NewOrder = () => {
     });
     const [order, setOrder] = useState([]);
     const [orderId, setOrderId] = useState(null);
-    const [pizzas, setPizzas] = useState([]); // State to hold the list of pizzas added to the order
+    // const [pizzas, setPizzas] = useState([]); // State to hold the list of pizzas added to the order
     const [transientPizza, setTransientPizza] = useState({
         toppings: [],
         crust: 0,
@@ -123,6 +123,7 @@ export const NewOrder = () => {
     };
 
     const handleOrder = () => {
+        debugger
         if (deliveryDestination.trim() === '') {
             window.alert("Please select a delivery destination.");
         } else {
