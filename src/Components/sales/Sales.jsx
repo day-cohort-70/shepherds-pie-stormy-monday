@@ -5,6 +5,7 @@ import "../orders/Orders.css"
 import { SalesFilter } from "./SalesFilter"
 import { SalesTotal } from "./SalesTotal"
 import { SalesItems } from "./SalesItems"
+import "./Sales.css"
 
 export const Sales = () => {
     const [allOrders, setAllOrders] = useState([])
@@ -194,10 +195,11 @@ export const Sales = () => {
         }
     }, [showMonthOrder, allPizzas])
 
-    return <>
-    <SalesFilter setChosenMonth={setChosenMonth}/>
-    <SalesItems mostPopCrust={mostPopCrust} mostPopSauce={mostPopSauce} mostPopCheese={mostPopCheese} mostPopToppings={mostPopToppings} totalSales={totalSales}/>
-    <SalesTotal totalSales={totalSales}/>
+    return <div className="sales-container">
+    <div className="sales-heading">
+    <div className="sales-results" ><SalesItems mostPopCrust={mostPopCrust} mostPopSauce={mostPopSauce} mostPopCheese={mostPopCheese} mostPopToppings={mostPopToppings} totalSales={totalSales}/>
+    <SalesTotal totalSales={totalSales}/></div>
+    <SalesFilter setChosenMonth={setChosenMonth}/></div>
     {showMonthOrder.map(orderObj =>{
                 return(
                     <Link to={`/orders/${orderObj.id}`}>
@@ -210,5 +212,5 @@ export const Sales = () => {
                     </Link>
                 )
             })}
-    </>
+    </div>
 }

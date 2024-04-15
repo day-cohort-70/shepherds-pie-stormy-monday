@@ -1,0 +1,27 @@
+.order-options {
+    background-color: var(--white);
+    border: 1px solid var(--primary);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+h3 {
+    margin: 0.5rem;
+    margin-left: 0;
+}
+
+.order-container {
+    margin: 1rem;
+}
+
+.order-controls-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-neworder {
+    margin: 0;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
