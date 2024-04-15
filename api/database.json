@@ -265,24 +265,19 @@
       "id": 10
     },
     {
-      "toppingObj": {
-        "pizzaId": 11,
-        "toppingId": 4
-      },
+     
+      "pizzaId": 11,
+      "toppingId": 4,
       "id": 11
     },
     {
-      "toppingObj": {
-        "pizzaId": 9,
-        "toppingId": 7
-      },
+      "pizzaId": 9,
+      "toppingId": 7,
       "id": 12
     },
     {
-      "toppingObj": {
-        "pizzaId": 11,
-        "toppingId": 4
-      },
+      "pizzaId": 11,
+      "toppingId": 4,
       "id": 13
     },
     {
