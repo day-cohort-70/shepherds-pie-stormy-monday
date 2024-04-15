@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { getNextOrderId } from "../../services/OrderService.jsx";
 import { getCheeses, getToppings, getCrusts, getSauces } from "../../services/ingredientService.js";
 import { OrderOptions } from './OrderOptions.jsx'; 
+import { getEmployees } from '../../services/employeeService.js';
+import "./Create.css"
 
 export const NewOrder = () => {
     const [ingredients, setIngredients] = useState({
