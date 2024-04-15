@@ -84,3 +84,15 @@
     padding-right: 0.3rem;
     margin-left: 0.3rem;
   }
+  
+  .order-details{
+    display: flex;
+    margin: 1rem;
+    padding: 0.5rem;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .btn-primary{
+    margin: 1rem;
+  }

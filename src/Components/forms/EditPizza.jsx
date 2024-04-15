@@ -8,7 +8,7 @@ import { getCheeses } from "../../services/pizzaService.js";
 
 export const EditPizza = () => {
     const [edittedPizza, setEdittedPizza] = useState({});
-    const { pizzaId } = useParams();
+    const { orderId, pizzaId } = useParams();
     const navigate = useNavigate();
     const [crusts, setCrusts] = useState([]);
     const [sauces, setSauces] = useState([]);

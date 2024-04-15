@@ -27,9 +27,9 @@ export const AdminViews = ({currentUser}) => {
         </Route>        
         <Route index element ={<OrderList currentUser={currentUser} />} />
         <Route path="orders/:orderId" element={<OrderView />}/>
-        <Route path="orders/edit/:pizzaId" element={<EditPizza/>}/>
+        <Route path="orders/:orderId/edit/:pizzaId" element={<EditPizza/>}/>
         <Route path="orders/create" element={<NewOrder currentUser={currentUser} />} />
-        <Route path="orders/addPizza/:orderId" element={<AddPizza />}/>
+        <Route path="orders/addPizza/:orderId" element={<AddPizza />}/>xs
         <Route path="sales" element={<Sales/>}/>
         </Route>
         </Routes>

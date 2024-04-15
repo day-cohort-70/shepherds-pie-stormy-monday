@@ -43,14 +43,6 @@
   ],
   "orders": [
     {
-      "id": 2,
-      "employeeId": 3,
-      "timestamp": 1712174457000,
-      "tip": 2,
-      "destination": "4",
-      "delivererId": 3
-    },
-    {
       "id": 4,
       "employeeId": 3,
       "timestamp": 1710251354000,
@@ -125,31 +117,10 @@
   ],
   "pizzas": [
     {
-      "id": 1,
-      "orderId": 1,
-      "crustId": 3,
-      "cheeseId": 2,
-      "sauceId": 1
-    },
-    {
-      "id": 2,
-      "orderId": 1,
-      "crustId": 1,
-      "cheeseId": 2,
-      "sauceId": 3
-    },
-    {
-      "id": 3,
-      "orderId": 2,
-      "crustId": 2,
-      "cheeseId": 3,
-      "sauceId": 4
-    },
-    {
       "id": 4,
       "orderId": 3,
       "crustId": 2,
-      "cheeseId": 1,
+      "cheeseId": 3,
       "sauceId": 1
     },
     {
@@ -164,13 +135,6 @@
       "orderId": 4,
       "crustId": 3,
       "cheeseId": 1,
-      "sauceId": 1
-    },
-    {
-      "id": 7,
-      "orderId": 4,
-      "crustId": 3,
-      "cheeseId": 2,
       "sauceId": 1
     },
     {
@@ -225,21 +189,6 @@
   ],
   "pizzaToppings": [
     {
-      "id": 1,
-      "pizzaId": 1,
-      "toppingId": 4
-    },
-    {
-      "id": 2,
-      "pizzaId": 1,
-      "toppingId": 2
-    },
-    {
-      "id": 3,
-      "pizzaId": 1,
-      "toppingId": 3
-    },
-    {
       "id": 4,
       "pizzaId": 4,
       "toppingId": 3
@@ -268,26 +217,6 @@
       "id": 9,
       "pizzaId": 7,
       "toppingId": 5
-    },
-    {
-      "id": 6,
-      "pizzaId": 2,
-      "toppingId": 2
-    },
-    {
-      "id": 7,
-      "pizzaId": 2,
-      "toppingId": 3
-    },
-    {
-      "id": 8,
-      "pizzaId": 2,
-      "toppingId": 1
-    },
-    {
-      "id": 9,
-      "pizzaId": 10,
-      "toppingId": 8
     },
     {
       "pizzaId": 3,

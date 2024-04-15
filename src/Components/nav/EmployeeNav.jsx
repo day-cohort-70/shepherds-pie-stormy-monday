@@ -7,6 +7,9 @@ export const EmployeeNav = () =>{
 
     return(
         <ul className="navbar">
+           <li className="navbar-item">
+            <Link to='/'>Orders</Link>
+        </li>
         {localStorage.getItem("shepherds_user") ? (
   <li className="navbar-item navbar-logout">
     <Link

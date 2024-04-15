@@ -19,7 +19,7 @@ export const EmployeeViews = ({ currentUser }) => {
             }>
                 <Route index element={<OrderList currentUser={currentUser} />}/>
                     <Route path="orders/:orderId" element={<OrderView />} />
-                    <Route path="orders/edit/:pizzaId" element={<EditPizza />} />
+                    <Route path="orders/:orderId/edit/:pizzaId" element={<EditPizza />} />
                 <Route path="orders/create" element={<NewOrder currentUser={currentUser} />} />
                 <Route path="orders/addPizza/${orderId}" element={<AddPizza />} />
             </Route>
