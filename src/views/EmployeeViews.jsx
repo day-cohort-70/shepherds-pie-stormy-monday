@@ -21,7 +21,7 @@ export const EmployeeViews = ({ currentUser }) => {
                     <Route path="orders/:orderId" element={<OrderView />} />
                     <Route path="orders/:orderId/edit/:pizzaId" element={<EditPizza />} />
                 <Route path="orders/create" element={<NewOrder currentUser={currentUser} />} />
-                <Route path="orders/addPizza/${orderId}" element={<AddPizza />} />
+                <Route path="orders/addPizza/:orderId" element={<AddPizza />} />
             </Route>
         </Routes>
     )
