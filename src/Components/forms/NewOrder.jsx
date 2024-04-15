@@ -4,6 +4,7 @@ import { getCheeses, getToppings, getCrusts, getSauces } from "../../services/in
 import { OrderOptions } from './OrderOptions.jsx'; 
 import { getEmployees } from '../../services/employeeService.js';
 import "./Create.css"
+import { useNavigate } from 'react-router-dom';
 
 export const NewOrder = ({currentUser}) => {
     const [ingredients, setIngredients] = useState({
@@ -23,7 +24,7 @@ export const NewOrder = ({currentUser}) => {
         sauce: 0
     }); 
     const [deliveryDestination, setDeliveryDestination] = useState(''); // State for delivery destination
-
+    const navigate = useNavigate();
     useEffect(() => {
         Promise.all([
             getToppings(),
@@ -211,6 +212,7 @@ const addOrderToDatabase = async (order) => {
     try {
         await insertOrderIntoDatabase(order);
         window.alert("Order placed.");
+        navigate('/');
     } catch (error) {
         window.alert("Error placing order.", error);
         console.log(error)
