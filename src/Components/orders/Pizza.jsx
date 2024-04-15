@@ -2,17 +2,23 @@ import { useEffect, useState } from "react"
 import { getPizzaById } from "../../services/OrderService.jsx"
 import { PizzaToppings } from "./PizzaToppings.jsx"
 import { useNavigate } from "react-router-dom"
+import { DeletePizza } from "../../services/pizzaService.js"
 
-export const Pizza = ({ pizza, pizzaId, orderPrice, setOrderPrice }) => {
+export const Pizza = ({ pizza, pizzaId, orderPrice, setOrderPrice, orderId, getAndSetPizzas }) => {
     const [currentPizzaPrice, setCurrentPizzaPrice] = useState(0)
     const navigate = useNavigate()
 
     const handleEdit = (e) => {
         e.preventDefault()
         const pizzaId = e.target.value
-        navigate(`/orders/edit/${pizzaId}`)
+        navigate(`/orders/${orderId}/edit/${pizzaId}`)
     }
-
+    const handleDelete = async (e) => {
+        const pizzaId = parseInt(e.target.value)
+        await DeletePizza(pizzaId)
+        console.log("pizza deleted")
+        getAndSetPizzas()
+    }
     useEffect(() => {
         getPizzaById(pizzaId).then(pizzaArr => {
             let pizzaObj = pizzaArr[0]
@@ -52,6 +58,10 @@ export const Pizza = ({ pizza, pizzaId, orderPrice, setOrderPrice }) => {
                 </div>
             </div>
             <div className="btn-container">
+            <button className="btn-primary"
+                value = {pizza.id}
+                    onClick={handleDelete}
+                >Delete Pizza</button>
                 <button className="btn-primary"
                 value = {pizza.id}
                     onClick={handleEdit}

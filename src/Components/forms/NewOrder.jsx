@@ -126,6 +126,7 @@ useEffect(() => {
     };
 
     const handleOrder = () => {
+        debugger
         if (deliveryDestination.trim() === '') {
             window.alert("Please select a delivery destination.");
         } else {
