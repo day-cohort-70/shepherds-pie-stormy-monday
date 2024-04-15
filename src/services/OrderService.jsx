@@ -12,12 +12,21 @@ export const getPizzasByOrderId = (orderId)=>{
 
 export const getNextOrderId = async () => {
     let currentOrders = await fetch (`http://localhost:8088/orders`).then(res => res.json());
-    return (currentOrders.length+1);
+    let max = 0;
+    currentOrders.forEach(order => {max = Math.max(order.id, max)}
+    );
+    max++;
+    return (max)
+
 }
 
 export const getNextPizzaId = async () => {
     let currentPizzas = await fetch (`http://localhost:8088/pizzas`).then(res => res.json());
-    return (currentPizzas.length+1);
+    let max = 0;
+    currentPizzas.forEach(pizza => {max = Math.max(pizza.id, max)}
+    );
+    max++;
+    return (max);
 }
 
 export const getToppingsByPizzaId = (pizzaId) => {
