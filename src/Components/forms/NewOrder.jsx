@@ -255,7 +255,7 @@ const addOrderToDatabase = async (order) => {
             <div className="order-status">
                 <h2>Total Price: ${calculateTotalPrice(order)}</h2>
             {order.map((pizza, index) => (
-                <div key={index} className="pizza-details">
+                <div key={index} className="order-options">
                     <h3>Pizza {index + 1}</h3>
                     <p>Crust: {ingredients.crusts.find(crust => crust.id === pizza.crust).desc}</p>
                     <p>Cheese: {ingredients.cheeses.find(cheese => cheese.id === pizza.cheese).desc}</p>
