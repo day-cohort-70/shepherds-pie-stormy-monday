@@ -253,7 +253,7 @@ const addOrderToDatabase = async (order) => {
                 </div>
             </div>
             <div className="order-status">
-                <h2>Total Price: ${calculateTotalPrice(order)}</h2>
+                <h2>Total Price: {calculateTotalPrice(order).toLocaleString("en-US",{style: "currency",currency:"USD"})}</h2>
             {order.map((pizza, index) => (
                 <div key={index} className="order-options">
                     <h3>Pizza {index + 1}</h3>

@@ -69,12 +69,12 @@ export const OrderView = () => {
             </div>
             <div className="order-details">
                 <div>
-                    <span>Tip: $</span>
-                    {orderTip}
+                    <span>Tip: </span>
+                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(orderTip)}
                 </div>
                 <div>
-                    <span>Total Price: $</span>
-                    {orderPrice + orderTip + deliveryPrice}
+                    <span>Total Price: </span>
+                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(orderPrice + orderTip + deliveryPrice)}
                 </div>
             </div>
             <div className="orders-container">
