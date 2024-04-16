@@ -247,13 +247,10 @@ const addOrderToDatabase = async (order) => {
                     </div>
                     <div className="order-controls-button-container">
                         <button className="btn-primary btn-neworder" onClick={addPizza}>Add Pizza</button>
-                        <button className="btn-primary btn-neworder" onClick={clearOrder}>Clear Order</button>
-                        <button className="btn-primary btn-neworder" onClick={handleOrder}>Place Order</button>
                     </div>
                 </div>
             </div>
             <div className="order-status">
-                <h2>Total Price: ${calculateTotalPrice(order)}</h2>
             {order.map((pizza, index) => (
                 <div key={index} className="order-options">
                     <h3>Pizza {index + 1}</h3>
@@ -263,6 +260,13 @@ const addOrderToDatabase = async (order) => {
                     <p>Toppings: {pizza.toppings.map(topping => topping.desc).join(', ')}</p>
                 </div>
             ))}
+            <div className="order-controls-container">
+                <h2>Total Price: ${calculateTotalPrice(order)}</h2>
+                    <div className="order-controls-button-container">
+                        <button className="btn-primary btn-neworder" onClick={clearOrder}>Clear Order</button>
+                        <button className="btn-primary btn-neworder" onClick={handleOrder}>Place Order</button>
+                    </div>
+                </div>
             </div>
         </div>
     );
