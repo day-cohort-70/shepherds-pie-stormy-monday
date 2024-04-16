@@ -62,22 +62,12 @@ export const OrderView = () => {
 
     return (
         <>
+            <div className="orders-container">
             <div className="btn-container">
                 <button className="btn-primary" value={orderId}
                     onClick={handleAddPizza}
                 >Add Pizza</button>
             </div>
-            <div className="order-details">
-                <div>
-                    <span>Tip: </span>
-                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(orderTip)}
-                </div>
-                <div>
-                    <span>Total Price: </span>
-                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(orderPrice + orderTip + deliveryPrice)}
-                </div>
-            </div>
-            <div className="orders-container">
                 {currentOrder.map(pizza => {
                     return (
                         <>
@@ -88,6 +78,16 @@ export const OrderView = () => {
                     )
                 })
                 }
+                <div className="order-details">
+                <div><b>
+                    <span>Tip: </span>
+                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(orderTip)}
+                </b></div>
+                <div> <b>
+                    <span>Total Price: </span>
+                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(orderPrice + orderTip + deliveryPrice)}
+                </b></div>
+            </div>
             </div>
         </>
     )

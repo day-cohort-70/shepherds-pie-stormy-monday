@@ -87,9 +87,7 @@
   
   .order-details{
     display: flex;
-    margin: 1rem;
-    padding: 0.5rem;
-    align-items: center;
+    align-items: flex-end;
     flex-direction: column;
   }
 
