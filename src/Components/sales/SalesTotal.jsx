@@ -5,7 +5,7 @@ export const SalesTotal = ({totalSales}) => {
 
     useEffect(() => {
         if (totalSales !== 0){
-            setSalesMessage(`Total Sales: $${totalSales}`)
+            setSalesMessage(`Total Sales: ${totalSales.toLocaleString("en-US",{style: "currency",currency:"USD"})}`)
         } else {
             setSalesMessage("No Sales This Month")
         }

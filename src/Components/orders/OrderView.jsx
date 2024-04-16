@@ -80,12 +80,12 @@ export const OrderView = () => {
                 }
                 <div className="order-details">
                 <div><b>
-                    <span>Tip: $</span>
-                    {orderTip}
+                    <span>Tip: </span>
+                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(orderTip)}
                 </b></div>
                 <div> <b>
-                    <span>Total Price: $</span>
-                    {orderPrice + orderTip + deliveryPrice}
+                    <span>Total Price: </span>
+                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(orderPrice + orderTip + deliveryPrice)}
                 </b></div>
             </div>
             </div>
