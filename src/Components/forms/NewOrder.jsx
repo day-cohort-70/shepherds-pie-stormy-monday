@@ -261,7 +261,7 @@ const addOrderToDatabase = async (order) => {
                 </div>
             ))}
             <div className="order-controls-container">
-                <h2>Total Price: ${calculateTotalPrice(order).toLocaleString("en-US",{style: "currency",currency:"USD"})}</h2>
+                <h2>Total Price: {calculateTotalPrice(order).toLocaleString("en-US",{style: "currency",currency:"USD"})}</h2>
                     <div className="order-controls-button-container">
                         <button className="btn-primary btn-neworder" onClick={clearOrder}>Clear Order</button>
                         <button className="btn-primary btn-neworder" onClick={handleOrder}>Place Order</button>
